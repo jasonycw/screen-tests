@@ -24,15 +24,16 @@
                     <input type="number" id="row" name="row" value="32"><br><br>
                     <label for="column">Column:</label>
                     <input type="number" id="column" name="column" value="36"><br><br>
-                    <button onclick="redirectToPage()">Go to Local Dimming Page</button>
+                    <button onclick="gotoLocalDimming()">Go to Local Dimming Page</button>
                 </form>
 
                 <script>
-                    function redirectToPage() {
+                    function gotoLocalDimming() {
                         var row = document.getElementById("row").value;
                         var column = document.getElementById("column").value;
-                        var url = "/local-dimming?rows=" + row + "&columns=" + column;
-                        window.location.href += url;
+                        var url = `/local-dimming?rows=${row}&columns=${column}`;
+                        var currentUrl = window.location.href.replace(/\/+$/, ""); // remove trailing slashes from current URL
+                        window.location.href = currentUrl + url;
                     }
                 </script>
             </td>
@@ -40,7 +41,16 @@
         <tr>
             <td>Gradient</td>
             <td>
-                <a href="/gradient">simulate rtings' gradient testing picture</a>
+                <a onclick="gotoGradient()">simulate rtings' gradient testing picture</a>
+                <script>
+                    function gotoGradient() {
+                        var row = document.getElementById("row").value;
+                        var column = document.getElementById("column").value;
+                        var url = "/gradient";
+                        var currentUrl = window.location.href.replace(/\/+$/, ""); // remove trailing slashes from current URL
+                        window.location.href = currentUrl + url;
+                    }
+                </script>
             </td>
         </tr>
     </table>
