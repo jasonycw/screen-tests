@@ -16,7 +16,7 @@
             var lastSlashIndex = pathname.lastIndexOf("/");
             var currentUrl = window.location.origin + pathname.substring(0, lastSlashIndex).replace(/\/+$/, "") + window.location.search;
             var newUrl = currentUrl + route;
-            window.location.assign = newUrl;
+            window.location.href = newUrl;
         }
     </script>
 </head>
@@ -48,7 +48,8 @@
                     function gotoLocalDimming() {
                         var row = document.getElementById("row").value;
                         var column = document.getElementById("column").value;
-                        goto(`/local-dimming?rows=${row}&columns=${column}`);
+                        //goto(`/local-dimming?rows=${row}&columns=${column}`);
+                        window.location.href = `local-dimming?rows=${row}&columns=${column}`
                     }
                 </script>
             </td>
