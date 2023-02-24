@@ -3,6 +3,19 @@
 
 <head>
     <title>Screen test tools</title>
+    <script>
+        function removeQueryStrings() {
+            if (window.location.search) {
+                window.history.replaceState(null, null, window.location.pathname);
+            }
+        }
+        removeQueryStrings(); // Call the function immediately to remove query strings before page is fully loaded
+
+        function goto(route) {
+            var currentUrl = window.location.origin + window.location.pathname.replace(/\/+$/, "") + window.location.search;
+            window.location.href = currentUrl + route;
+        }
+    </script>
 </head>
 
 <style>
@@ -31,9 +44,7 @@
                     function gotoLocalDimming() {
                         var row = document.getElementById("row").value;
                         var column = document.getElementById("column").value;
-                        var url = `/local-dimming?rows=${row}&columns=${column}`;
-                        var currentUrl = window.location.href.replace(/\/+$/, ""); // remove trailing slashes from current URL
-                        window.location.href = currentUrl + url;
+                        goto(`/local-dimming?rows=${row}&columns=${column}`);
                     }
                 </script>
             </td>
@@ -41,14 +52,12 @@
         <tr>
             <td>Gradient</td>
             <td>
-                <a onclick="gotoGradient()">simulate rtings' gradient testing picture</a>
+                <a href="" onclick="gotoGradient()">simulate rtings' gradient testing picture</a>
                 <script>
                     function gotoGradient() {
                         var row = document.getElementById("row").value;
                         var column = document.getElementById("column").value;
-                        var url = "/gradient";
-                        var currentUrl = window.location.href.replace(/\/+$/, ""); // remove trailing slashes from current URL
-                        window.location.href = currentUrl + url;
+                        goto("/gradient");
                     }
                 </script>
             </td>
