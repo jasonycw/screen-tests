@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Screen test tools</title>
+</head>
+
+<style>
+    tr {
+        border: solid 1px black;
+        margin: 8px;
+        display: block;
+    }
+</style>
+
+<body>
+    <h1>Screen test tools</h1>
+    <table>
+        <tr>
+            <td>Local Dimming</td>
+            <td>
+                <form>
+                    <label for="row">Row:</label>
+                    <input type="number" id="row" name="row" value="32"><br><br>
+                    <label for="column">Column:</label>
+                    <input type="number" id="column" name="column" value="36"><br><br>
+                    <button onclick="redirectToPage()">Go to Local Dimming Page</button>
+                </form>
+
+                <script>
+                    function redirectToPage() {
+                        var row = document.getElementById("row").value;
+                        var column = document.getElementById("column").value;
+                        var url = "/local-dimming?rows=" + row + "&columns=" + column;
+                        window.location.href += url;
+                    }
+                </script>
+            </td>
+        </tr>
+        <tr>
+            <td>Gradient</td>
+            <td>
+                <a href="/gradient">simulate rtings' gradient testing picture</a>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
