@@ -1,4 +1,7 @@
-# ChatGPT Prompt
+# What is this?
+To simulate local dimming behavior
+
+## ChatGPT Prompt
 
 1. Give me an html page to simulate miniLED local dimming.
    I want the page to first let me set the row and columns and then display a completely black page with said row and column cell
