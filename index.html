@@ -12,8 +12,10 @@
         removeQueryStrings(); // Call the function immediately to remove query strings before page is fully loaded
 
         function goto(route) {
-            var currentUrl = window.location.origin + window.location.pathname.replace(/\/+$/, "") + window.location.search;
-            window.location.href = currentUrl + route;
+            var pathname = window.location.pathname;
+            var lastSlashIndex = pathname.lastIndexOf("/");
+            var currentUrl = window.location.origin + pathname.substring(0, lastSlashIndex).replace(/\/+$/, "") + window.location.search;
+            document.location.href = currentUrl + route;
         }
     </script>
 </head>
