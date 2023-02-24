@@ -15,7 +15,8 @@
             var pathname = window.location.pathname;
             var lastSlashIndex = pathname.lastIndexOf("/");
             var currentUrl = window.location.origin + pathname.substring(0, lastSlashIndex).replace(/\/+$/, "") + window.location.search;
-            document.location.href = currentUrl + route;
+            var newUrl = currentUrl + route;
+            window.location.assign = newUrl;
         }
     </script>
 </head>
@@ -30,6 +31,7 @@
 
 <body>
     <h1>Screen test tools</h1>
+
     <table>
         <tr>
             <td>Local Dimming</td>
@@ -54,14 +56,7 @@
         <tr>
             <td>Gradient</td>
             <td>
-                <a href="" onclick="gotoGradient()">simulate rtings' gradient testing picture</a>
-                <script>
-                    function gotoGradient() {
-                        var row = document.getElementById("row").value;
-                        var column = document.getElementById("column").value;
-                        goto("/gradient");
-                    }
-                </script>
+                <a href="gradient">simulate from rtings' gradient testing picture</a>
             </td>
         </tr>
     </table>
