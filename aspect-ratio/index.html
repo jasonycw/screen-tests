@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Aspect Ratio Simulator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .aspect-ratio-box {
+            background-color: white;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aspect-ratio-box" id="aspect-ratio-box"></div>
+
+    <script>
+        // Get aspect ratio from query string
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const x = urlParams.get('x');
+        const y = urlParams.get('y');
+        const aspectRatio = x / y;
+
+        // Determine dimensions of aspect ratio box
+        const updateAspectRatioBox = () => {
+            // Calculate width and height based on aspect ratio and screen size
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const screenAspectRatio = screenWidth / screenHeight;
+            let width, height;
+
+            if (screenAspectRatio > aspectRatio) {
+                height = screenHeight;
+                width = height * aspectRatio;
+            } else {
+                width = screenWidth;
+                height = width / aspectRatio;
+            }
+
+            // Set dimensions of aspect ratio box
+            const aspectRatioBox = document.getElementById('aspect-ratio-box');
+            aspectRatioBox.style.width = `${width}px`;
+            aspectRatioBox.style.height = `${height}px`;
+
+            // Center aspect ratio box
+            const leftOffset = (screenWidth - width) / 2;
+            const topOffset = (screenHeight - height) / 2;
+            aspectRatioBox.style.top = `${topOffset}px`;
+            aspectRatioBox.style.left = `${leftOffset}px`;
+        }
+
+        // Call updateAspectRatioBox on load and resize events
+        window.addEventListener('load', updateAspectRatioBox);
+        window.addEventListener('resize', updateAspectRatioBox);
+    </script>
+</body>
+
+</html>
