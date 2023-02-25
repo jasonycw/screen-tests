@@ -16,19 +16,31 @@
         .aspect-ratio-box {
             background-color: white;
             position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #player {
+            min-width: 140%;
+            min-height: 140%;
+            overflow: hidden;
         }
     </style>
 </head>
 
 <body>
-    <div class="aspect-ratio-box" id="aspect-ratio-box"></div>
+    <div class="aspect-ratio-box" id="aspect-ratio-box">
+        <iframe id='player' frameborder="0" allow="autoplay"></iframe>
+    </div>
 
     <script>
         // Get aspect ratio from query string
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const x = urlParams.get('x');
-        const y = urlParams.get('y');
+        const x = urlParams.get('x') || 21;
+        const y = urlParams.get('y') || 9;
         const aspectRatio = x / y;
 
         // Determine dimensions of aspect ratio box
@@ -62,6 +74,12 @@
         // Call updateAspectRatioBox on load and resize events
         window.addEventListener('load', updateAspectRatioBox);
         window.addEventListener('resize', updateAspectRatioBox);
+
+        const videoId = urlParams.get('v');
+        if (videoId) {
+            const player = document.getElementById('player');
+            player.src = `https://www.youtube.com/embed/${videoId}?&autoplay=1&autohide=2&modestbranding=1&fs=0&showinfo=0`
+        }
     </script>
 </body>
 
