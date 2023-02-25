@@ -24,57 +24,66 @@
         const canvas = document.getElementById('gradientCanvas');
         const context = canvas.getContext('2d');
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        function updateCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drawGradients();
+        }
 
-        const gradient1 = context.createLinearGradient(0, 0, canvas.width, 0);
-        gradient1.addColorStop(0, '#000000');
-        gradient1.addColorStop(1, '#808080');
+        function drawGradients() {
+            const gradient1 = context.createLinearGradient(0, 0, canvas.width, 0);
+            gradient1.addColorStop(0, '#000000');
+            gradient1.addColorStop(1, '#808080');
 
-        const gradient2 = context.createLinearGradient(0, 0, canvas.width, 0);
-        gradient2.addColorStop(0, '#808080');
-        gradient2.addColorStop(1, '#FFFFFF');
+            const gradient2 = context.createLinearGradient(0, 0, canvas.width, 0);
+            gradient2.addColorStop(0, '#808080');
+            gradient2.addColorStop(1, '#FFFFFF');
 
-        const gradient3 = context.createLinearGradient(0, 0, canvas.width, 0);
-        gradient3.addColorStop(0, '#000000');
-        gradient3.addColorStop(1, '#800000');
+            const gradient3 = context.createLinearGradient(0, 0, canvas.width, 0);
+            gradient3.addColorStop(0, '#000000');
+            gradient3.addColorStop(1, '#800000');
 
-        const gradient4 = context.createLinearGradient(0, 0, canvas.width, 0);
-        gradient4.addColorStop(0, '#800000');
-        gradient4.addColorStop(1, '#FF0000');
+            const gradient4 = context.createLinearGradient(0, 0, canvas.width, 0);
+            gradient4.addColorStop(0, '#800000');
+            gradient4.addColorStop(1, '#FF0000');
 
-        const gradient5 = context.createLinearGradient(0, 0, canvas.width, 0);
-        gradient5.addColorStop(0, '#000000');
-        gradient5.addColorStop(1, '#008000');
+            const gradient5 = context.createLinearGradient(0, 0, canvas.width, 0);
+            gradient5.addColorStop(0, '#000000');
+            gradient5.addColorStop(1, '#008000');
 
-        const gradient6 = context.createLinearGradient(0, 0, canvas.width, 0);
-        gradient6.addColorStop(0, '#008000');
-        gradient6.addColorStop(1, '#00FF00');
+            const gradient6 = context.createLinearGradient(0, 0, canvas.width, 0);
+            gradient6.addColorStop(0, '#008000');
+            gradient6.addColorStop(1, '#00FF00');
 
-        const gradient7 = context.createLinearGradient(0, 0, canvas.width, 0);
-        gradient7.addColorStop(0, '#000000');
-        gradient7.addColorStop(1, '#000080');
+            const gradient7 = context.createLinearGradient(0, 0, canvas.width, 0);
+            gradient7.addColorStop(0, '#000000');
+            gradient7.addColorStop(1, '#000080');
 
-        const gradient8 = context.createLinearGradient(0, 0, canvas.width, 0);
-        gradient8.addColorStop(0, '#000080');
-        gradient8.addColorStop(1, '#0000FF');
+            const gradient8 = context.createLinearGradient(0, 0, canvas.width, 0);
+            gradient8.addColorStop(0, '#000080');
+            gradient8.addColorStop(1, '#0000FF');
 
-        context.fillStyle = gradient1;
-        context.fillRect(0, 0, canvas.width, canvas.height / 8);
-        context.fillStyle = gradient2;
-        context.fillRect(0, canvas.height / 8, canvas.width, canvas.height / 8);
-        context.fillStyle = gradient3;
-        context.fillRect(0, canvas.height * 2 / 8, canvas.width, canvas.height / 8);
-        context.fillStyle = gradient4;
-        context.fillRect(0, canvas.height * 3 / 8, canvas.width, canvas.height / 8);
-        context.fillStyle = gradient5;
-        context.fillRect(0, canvas.height * 4 / 8, canvas.width, canvas.height / 8);
-        context.fillStyle = gradient6;
-        context.fillRect(0, canvas.height * 5 / 8, canvas.width, canvas.height / 8);
-        context.fillStyle = gradient7;
-        context.fillRect(0, canvas.height * 6 / 8, canvas.width, canvas.height / 8);
-        context.fillStyle = gradient8;
-        context.fillRect(0, canvas.height * 7 / 8, canvas.width, canvas.height / 8);
+            context.fillStyle = gradient1;
+            context.fillRect(0, 0, canvas.width, canvas.height / 8);
+            context.fillStyle = gradient2;
+            context.fillRect(0, canvas.height / 8, canvas.width, canvas.height / 8);
+            context.fillStyle = gradient3;
+            context.fillRect(0, canvas.height * 2 / 8, canvas.width, canvas.height / 8);
+            context.fillStyle = gradient4;
+            context.fillRect(0, canvas.height * 3 / 8, canvas.width, canvas.height / 8);
+            context.fillStyle = gradient5;
+            context.fillRect(0, canvas.height * 4 / 8, canvas.width, canvas.height / 8);
+            context.fillStyle = gradient6;
+            context.fillRect(0, canvas.height * 5 / 8, canvas.width, canvas.height / 8);
+
+            context.fillStyle = gradient7;
+            context.fillRect(0, canvas.height * 6 / 8, canvas.width, canvas.height / 8);
+            context.fillStyle = gradient8;
+            context.fillRect(0, canvas.height * 7 / 8, canvas.width, canvas.height / 8);
+        }
+
+        updateCanvasSize();
+        window.addEventListener('resize', updateCanvasSize);
     </script>
 </body>
 

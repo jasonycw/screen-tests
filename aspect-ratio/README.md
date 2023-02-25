@@ -11,3 +11,6 @@ To simulata difference aspect ratio on difference screen size
 2. ```
    The white box should always centred and the should be responsive to the windows size
    ```
+3. ```
+   The gradient should always fit the whole window, even when the window is changed
+   ```
