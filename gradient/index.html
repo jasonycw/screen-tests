@@ -24,6 +24,10 @@
         const canvas = document.getElementById('gradientCanvas');
         const context = canvas.getContext('2d');
 
+        document.getElementsByTagName('canvas')[0].addEventListener('click', () => {
+            document.documentElement.requestFullscreen();
+        });
+
         function updateCanvasSize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;

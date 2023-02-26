@@ -7,10 +7,12 @@
         body {
             margin: 0;
             padding: 0;
+            min-height: 100%;
             background-color: black;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
         .aspect-ratio-box {
@@ -22,6 +24,13 @@
             overflow: hidden;
         }
 
+        #toggle {
+            position: absolute;
+            z-index: 1;
+            min-width: 1000%;
+            min-height: 1000%;
+        }
+
         #player {
             min-width: 140%;
             min-height: 140%;
@@ -31,6 +40,7 @@
 </head>
 
 <body>
+    <div id="toggle"></div>
     <div class="aspect-ratio-box" id="aspect-ratio-box">
         <iframe id='player' frameborder="0" allow="autoplay"></iframe>
     </div>
@@ -80,6 +90,10 @@
             const player = document.getElementById('player');
             player.src = `https://www.youtube.com/embed/${videoId}?&autoplay=1&autohide=2&modestbranding=1&fs=0&showinfo=0`
         }
+
+        document.getElementById('toggle').addEventListener('click', () => {
+            document.documentElement.requestFullscreen();
+        });
     </script>
 </body>
 

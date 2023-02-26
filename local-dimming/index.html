@@ -1,58 +1,66 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Local Dimming Simulation</title>
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
 
-      body {
-        background-color: black;
-      }
+<head>
+  <title>Local Dimming Simulation</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
 
-      table {
-        border-collapse: collapse;
-        width: 100%;
-        height: 100%;
-      }
+    body {
+      background-color: black;
+    }
 
-      td {
-        width: calc(100% / var(--columns));
-        height: calc(100% / var(--rows));
-        background-color: black;
-      }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      height: 100%;
+    }
 
-      td:hover {
-        background-color: white;
-      }
-    </style>
-  </head>
-  <body>
-    <table>
-      <tbody>
-        <!-- Generate rows based on number of rows -->
-        <script>
-          const urlParams = new URLSearchParams(window.location.search);
-          const rows = parseInt(urlParams.get("rows")) || 5;
-          const columns = parseInt(urlParams.get("columns")) || 5;
-          for (let i = 0; i < rows; i++) {
-            const tr = document.createElement("tr");
-            document.querySelector("tbody").appendChild(tr);
-            for (let j = 0; j < columns; j++) {
-              const td = document.createElement("td");
-              tr.appendChild(td);
-            }
+    td {
+      width: calc(100% / var(--columns));
+      height: calc(100% / var(--rows));
+      background-color: black;
+    }
+
+    td:hover {
+      background-color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <tbody>
+      <!-- Generate rows based on number of rows -->
+      <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const rows = parseInt(urlParams.get("rows")) || 5;
+        const columns = parseInt(urlParams.get("columns")) || 5;
+        for (let i = 0; i < rows; i++) {
+          const tr = document.createElement("tr");
+          document.querySelector("tbody").appendChild(tr);
+          for (let j = 0; j < columns; j++) {
+            const td = document.createElement("td");
+            tr.appendChild(td);
           }
-          document.documentElement.style.setProperty("--rows", rows);
-          document.documentElement.style.setProperty(
-            "--columns",
-            columns
-          );
-        </script>
-      </tbody>
-    </table>
-  </body>
+        }
+        document.documentElement.style.setProperty("--rows", rows);
+        document.documentElement.style.setProperty(
+          "--columns",
+          columns
+        );
+
+        document.getElementsByTagName('table')[0].addEventListener('click', () => {
+          document.documentElement.requestFullscreen();
+        });
+      </script>
+    </tbody>
+  </table>
+</body>
+
 </html>
