@@ -40,14 +40,41 @@
             </td>
         </tr>
         <tr>
+            <td>Solid color</td>
+            <td>
+                <form>
+                    <label for="solid-color-red">Red:</label>
+                    <input type="number" id="solid-color-red" name="solid-color-red" value="0.5" min="0" max="1"
+                        step="0.01"><br>
+                    <label for="solid-color-green">Green:</label>
+                    <input type="number" id="solid-color-green" name="solid-color-green" value="0.5" min="0" max="1"
+                        step="0.01"><br>
+                    <label for="solid-color-blue">Blue:</label>
+                    <input type="number" id="solid-color-blue" name="solid-color-blue" value="0.5" min="0" max="1"
+                        step="0.01"><br>
+                    <button onclick="gotoColor()">test</button>
+                </form>
+
+                <script>
+                    function gotoColor() {
+                        const r = document.getElementById("solid-color-red").value;
+                        const g = document.getElementById("solid-color-green").value;
+                        const b = document.getElementById("solid-color-blue").value;
+                        goto(`/color?r=${r}&g=${g}&b=${b}`);
+                    }
+                </script>
+            </td>
+        </tr>
+        <tr>
             <td>Local Dimming</td>
             <td>
                 <form>
                     <label for="row">Row:</label>
-                    <input type="number" id="row" name="row" value="32"><br><br>
+                    <input type="number" id="row" name="row" value="32"><br>
                     <label for="column">Column:</label>
-                    <input type="number" id="column" name="column" value="36"><br><br>
+                    <input type="number" id="column" name="column" value="36"><br>
                     <button onclick="gotoLocalDimming()">Simulate local dimming</button>
+                    <button onclick="gotoNoLocalDimming()">No local dimming</button>
                 </form>
 
                 <script>
@@ -55,6 +82,9 @@
                         var row = document.getElementById("row").value;
                         var column = document.getElementById("column").value;
                         goto(`/local-dimming?rows=${row}&columns=${column}`);
+                    }
+                    function gotoNoLocalDimming() {
+                        goto(`/local-dimming?rows=1&columns=1`);
                     }
                 </script>
             </td>
@@ -64,20 +94,19 @@
             <td>
                 <form>
                     <label for="x">x:</label>
-                    <input type="number" id="aspect-ratio-x" name="aspect-ratio-x" value="21"><br><br>
+                    <input type="number" id="aspect-ratio-x" name="aspect-ratio-x" value="21"><br>
                     <label for="y">y:</label>
-                    <input type="number" id="aspect-ratio-y" name="aspect-ratio-y" value="9"><br><br>
+                    <input type="number" id="aspect-ratio-y" name="aspect-ratio-y" value="9"><br>
                     <label for="videoId">videoId:</label>
-                    <input type="string" id="aspect-ratio-videoId" name="aspect-ratio-videoId"
-                        value="y6120QOlsfU"><br><br>
+                    <input type="string" id="aspect-ratio-videoId" name="aspect-ratio-videoId" value="y6120QOlsfU"><br>
                     <button onclick="gotoAspectRatio()">Simulate aspect ratio</button>
                 </form>
 
                 <script>
                     function gotoAspectRatio() {
-                        var x = document.getElementById("aspect-ratio-x").value;
-                        var y = document.getElementById("aspect-ratio-y").value;
-                        var videoId = document.getElementById("aspect-ratio-videoId").value;
+                        const x = document.getElementById("aspect-ratio-x").value;
+                        const y = document.getElementById("aspect-ratio-y").value;
+                        const videoId = document.getElementById("aspect-ratio-videoId").value;
                         goto(`/aspect-ratio?x=${x}&y=${y}&v=${videoId}`);
                     }
                 </script>

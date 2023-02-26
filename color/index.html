@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Solid color</title>
+</head>
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    div {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<body>
+    <div></div>
+    <script>
+        // Retrieve the values of the r, g, and b query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const r = urlParams.get('r');
+        const g = urlParams.get('g');
+        const b = urlParams.get('b');
+
+        // Convert the values to integers between 0 and 255
+        const red = Math.floor(parseFloat(r) * 255);
+        const green = Math.floor(parseFloat(g) * 255);
+        const blue = Math.floor(parseFloat(b) * 255);
+
+        document.body.style.cssText += `
+        background-color:rgb(${red}, ${green}, ${blue});
+        background-color:color(sRGB , ${r} ${g} ${b});
+        background-color:color(display-p3, ${r} ${g} ${b});
+        background-color:color(a98-rgb, ${r} ${g} ${b});
+        background-color:color(rec2020, ${r} ${g} ${b});
+        background-color:color(prophoto-rgb, ${r} ${g} ${b});
+        display:flex`;
+
+        // Toggle full screen mode on body click
+        document.getElementsByTagName('div')[0].addEventListener('click', () => {
+            document.documentElement.requestFullscreen();
+        });
+    </script>
+</body>
+
+</html>
