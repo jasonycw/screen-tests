@@ -25,7 +25,11 @@
         const context = canvas.getContext('2d');
 
         document.getElementsByTagName('canvas')[0].addEventListener('click', () => {
-            document.documentElement.requestFullscreen();
+            try {
+                document.documentElement.requestFullscreen();
+            } catch (err) {
+                document.documentElement.webkitRequestFullScreen();
+            }
         });
 
         function updateCanvasSize() {

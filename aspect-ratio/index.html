@@ -94,7 +94,11 @@
         }
 
         document.getElementById('toggle').addEventListener('click', () => {
-            document.documentElement.requestFullscreen();
+            try {
+                document.documentElement.requestFullscreen();
+            } catch (err) {
+                document.documentElement.webkitRequestFullScreen();
+            }
         });
     </script>
 </body>
