@@ -22,7 +22,7 @@
 
     <script>
         const canvas = document.getElementById('gradientCanvas');
-        const context = canvas.getContext('2d');
+        const context = canvas.getContext('2d', { colorSpace: 'display-p3' });
 
         document.getElementsByTagName('canvas')[0].addEventListener('click', () => {
             try {
@@ -38,38 +38,44 @@
             drawGradients();
         }
 
+        const isColor = (strColor, fallbackColor) => {
+            const s = new Option().style;
+            s.color = strColor;
+            return s.color !== '' ? strColor : fallbackColor;
+        }
+
         function drawGradients() {
             const gradient1 = context.createLinearGradient(0, 0, canvas.width, 0);
-            gradient1.addColorStop(0, '#000000');
-            gradient1.addColorStop(1, '#808080');
+            gradient1.addColorStop(0, isColor('color(display-p3 0 0 0)', '#000000'));
+            gradient1.addColorStop(1, isColor('color(display-p3 0.5 0.5 0.5)', '#808080'));
 
             const gradient2 = context.createLinearGradient(0, 0, canvas.width, 0);
-            gradient2.addColorStop(0, '#808080');
-            gradient2.addColorStop(1, '#FFFFFF');
+            gradient2.addColorStop(0, isColor('color(display-p3 0.5 0.5 0.5)', '#808080'));
+            gradient2.addColorStop(1, isColor('color(display-p3 1 1 1)', '#FFFFFF'));
 
             const gradient3 = context.createLinearGradient(0, 0, canvas.width, 0);
-            gradient3.addColorStop(0, '#000000');
-            gradient3.addColorStop(1, '#800000');
+            gradient3.addColorStop(0, isColor('color(display-p3 0 0 0)', '#000000'));
+            gradient3.addColorStop(1, isColor('color(display-p3 0.5 0 0)', '#800000'));
 
             const gradient4 = context.createLinearGradient(0, 0, canvas.width, 0);
-            gradient4.addColorStop(0, '#800000');
-            gradient4.addColorStop(1, '#FF0000');
+            gradient4.addColorStop(0, isColor('color(display-p3 0.5 0 0)', '#800000'));
+            gradient4.addColorStop(1, isColor('color(display-p3 1 0 0)', '#FF0000'));
 
             const gradient5 = context.createLinearGradient(0, 0, canvas.width, 0);
-            gradient5.addColorStop(0, '#000000');
-            gradient5.addColorStop(1, '#008000');
+            gradient5.addColorStop(0, isColor('color(display-p3 0 0 0)', '#000000'));
+            gradient5.addColorStop(1, isColor('color(display-p3 0 0.5 0)', '#008000'));
 
             const gradient6 = context.createLinearGradient(0, 0, canvas.width, 0);
-            gradient6.addColorStop(0, '#008000');
-            gradient6.addColorStop(1, '#00FF00');
+            gradient6.addColorStop(0, isColor('color(display-p3 0 0.5 0)', '#008000'));
+            gradient6.addColorStop(1, isColor('color(display-p3 0 1 0)', '#00FF00'));
 
             const gradient7 = context.createLinearGradient(0, 0, canvas.width, 0);
-            gradient7.addColorStop(0, '#000000');
-            gradient7.addColorStop(1, '#000080');
+            gradient7.addColorStop(0, isColor('color(display-p3 0 0 0)', '#000000'));
+            gradient7.addColorStop(1, isColor('color(display-p3 0 0 0.5)', '#000080'));
 
             const gradient8 = context.createLinearGradient(0, 0, canvas.width, 0);
-            gradient8.addColorStop(0, '#000080');
-            gradient8.addColorStop(1, '#0000FF');
+            gradient8.addColorStop(0, isColor('color(display-p3 0 0 0.5)', '#000080'));
+            gradient8.addColorStop(1, isColor('color(display-p3 0 0 1)', '#0000FF'));
 
             context.fillStyle = gradient1;
             context.fillRect(0, 0, canvas.width, canvas.height / 8);
