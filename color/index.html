@@ -41,16 +41,21 @@
 
         document.body.style.cssText += `
         background-color:rgb(${red}, ${green}, ${blue});
-        background-color:color(sRGB , ${r} ${g} ${b});
-        background-color:color(display-p3, ${r} ${g} ${b});
-        background-color:color(a98-rgb, ${r} ${g} ${b});
-        background-color:color(rec2020, ${r} ${g} ${b});
-        background-color:color(prophoto-rgb, ${r} ${g} ${b});
-        display:flex`;
+        background-color:color(sRGB ${r} ${g} ${b});
+        background-color:color(srgb-linear ${r} ${g} ${b});
+        background-color:color(display-p3 ${r} ${g} ${b});
+        background-color:color(a98-rgb ${r} ${g} ${b});
+        background-color:color(rec2020 ${r} ${g} ${b});
+        background-color:color(prophoto-rgb ${r} ${g} ${b});
+        `;
 
         // Toggle full screen mode on body click
         document.getElementsByTagName('div')[0].addEventListener('click', () => {
-            document.documentElement.requestFullscreen();
+            try {
+                document.documentElement.requestFullscreen();
+            } catch (err) {
+                document.documentElement.webkitRequestFullScreen();
+            }
         });
     </script>
 </body>
