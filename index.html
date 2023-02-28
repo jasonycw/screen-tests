@@ -53,13 +53,21 @@
                     <input type="number" id="solid-color-blue" name="solid-color-blue" value="0.5" min="0" max="1"
                         step="0.01"><br>
                     <button onclick="gotoColor()">test</button>
+                    <span onclick="gotoColor(1,0,0)">🟥</span>
+                    <span onclick="gotoColor(1,1,0)">🟨</span>
+                    <span onclick="gotoColor(0,1,0)">🟩</span>
+                    <span onclick="gotoColor(0,1,1)" style="color:cyan"> █</span>
+                    <span onclick="gotoColor(0,0,1)">🟦</span>
+                    <span onclick="gotoColor(1,0,1)">🟪</span>
+                    <span onclick="gotoColor(0,0,0)">⬛️</span>
+                    <span onclick="gotoColor(1,1,1)">⬜️</span>
                 </form>
 
                 <script>
-                    function gotoColor() {
-                        const r = document.getElementById("solid-color-red").value;
-                        const g = document.getElementById("solid-color-green").value;
-                        const b = document.getElementById("solid-color-blue").value;
+                    function gotoColor(red, green, blue) {
+                        const r = red ?? document.getElementById("solid-color-red").value;
+                        const g = green ?? document.getElementById("solid-color-green").value;
+                        const b = blue ?? document.getElementById("solid-color-blue").value;
                         goto(`/color?r=${r}&g=${g}&b=${b}`);
                     }
                 </script>
