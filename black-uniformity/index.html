@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>White Cross on Black Background</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        .cross {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 19%;
+            width: 30%;
+        }
+
+        .cross:before,
+        .cross:after {
+            content: "";
+            position: absolute;
+            height: 8px;
+            background-color: white;
+        }
+
+        .cross:before {
+            width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .cross:after {
+            height: 100%;
+            width: 8px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .square {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cross"></div>
+    <div class="square"></div>
+</body>
+
+</html>
