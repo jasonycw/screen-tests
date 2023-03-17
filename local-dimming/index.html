@@ -40,8 +40,8 @@
       <!-- Generate rows based on number of rows -->
       <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const rows = parseInt(urlParams.get("rows")) || 5;
-        const columns = parseInt(urlParams.get("columns")) || 5;
+        const rows = parseInt(urlParams.get("rows")) || (window.screen.height / 5);
+        const columns = parseInt(urlParams.get("columns")) || (window.screen.width / 5);
         for (let i = 0; i < rows; i++) {
           const tr = document.createElement("tr");
           document.querySelector("tbody").appendChild(tr);
