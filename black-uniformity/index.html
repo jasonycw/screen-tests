@@ -51,12 +51,28 @@
             height: 40px;
             background-color: white;
         }
+
+        #toggle {
+            position: absolute;
+            z-index: 1;
+            min-width: 100%;
+            min-height: 100%;
+        }
     </style>
 </head>
 
+
 <body>
+    <div id="toggle"></div>
     <div class="cross"></div>
     <div class="square"></div>
 </body>
+
+<script>
+    // Toggle full screen mode on body click
+    document.getElementById('toggle').addEventListener('click', () => {
+        document.documentElement.requestFullscreen();
+    });
+</script>
 
 </html>
