@@ -61,3 +61,6 @@ To reporduce rtings' black uniformity test pattern from https://www.rtings.com/m
 16. ```
     Now add a 40x40 white square in the middle of the screen as well
     ```
+    
+![chatGPT](https://user-images.githubusercontent.com/4518597/227432443-f0fb3ca5-eb33-45b0-8fa3-2c22da6fe415.png)
+
