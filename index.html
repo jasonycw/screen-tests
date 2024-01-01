@@ -89,14 +89,37 @@
                     <input type="number" id="row" name="row" value="32"><br>
                     <label for="column">Column:</label>
                     <input type="number" id="column" name="column" value="36"><br>
-                    <button onclick="gotoLocalDimming()">Simulate local dimming</button>
+                    <button onclick="tryLocalDimming()">Simulate local dimming</button>
+                    <!--https://www.youtube.com/watch?v=LY_pUZbZ5zs-->
+                    <button onclick="gotoLocalDimming(18, 32)">Simulate Apple Pro Display XDR (576 zones)</button>
+                    <!--Guess base on https://www.youtube.com/watch?v=AHJ0yUUuPkE-->
+                    <button onclick="gotoLocalDimming(36, 32)">Simulate INNOCN 27M2V (1152 zones)</button>
+                    <!--https://www.youtube.com/watch?v=P9a5p5GUeAk-->
+                    <button onclick="gotoLocalDimming(24, 48)">Simulate Skyworth F32D80U (1152 zones)</button>
+                    <!--https://www.youtube.com/watch?v=3cIxZQHuCiY-->
+                    <button onclick="gotoLocalDimming(26, 46)">Simulate Samsung Odyssey Neo G7 (1196 zones)</button>
+                    <!---->
+                    <!-- <button onclick="gotoLocalDimming(25, 62)">Simulate LG 27GR95UM (1560 zones)</button> -->
+                    <!---->
+                    <button onclick="gotoLocalDimming(34, 59)">Simulate Apple Macbook Pro 14 (~2000 zones)</button>
+                    <!--https://www.youtube.com/watch?v=cOXfw5vNePE-->
+                    <button onclick="gotoLocalDimming(36, 64)">Simulate Philips 27B1U7903 (2304 zones)</button>
+                    <!---->
+                    <button onclick="gotoLocalDimming(38, 67)">Simulate Apple Macbook Pro 16 (~2500 zones)</button>
+                    <!--https://www.youtube.com/watch?v=6s5E1uujK9Q-->
+                    <button onclick="gotoLocalDimming(48, 106)">Simulate REDMAGIC GM001S (5088 zones)</button>
+                    <!--https://www.youtube.com/watch?v=d8dlz5LWq3E-->
+                    <button onclick="gotoLocalDimming(180, 190)">Simulate TCL X11G Max (20520 zones)</button>
                     <button onclick="gotoNoLocalDimming()">No local dimming</button>
                 </form>
 
                 <script>
-                    function gotoLocalDimming() {
+                    function tryLocalDimming() {
                         var row = document.getElementById("row").value;
                         var column = document.getElementById("column").value;
+                        goto(`/local-dimming?rows=${row}&columns=${column}`);
+                    }
+                    function gotoLocalDimming(row, column) {
                         goto(`/local-dimming?rows=${row}&columns=${column}`);
                     }
                     function gotoNoLocalDimming() {
