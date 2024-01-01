@@ -90,26 +90,56 @@
                     <label for="column">Column:</label>
                     <input type="number" id="column" name="column" value="36"><br>
                     <button onclick="tryLocalDimming()">Simulate local dimming</button>
-                    <!--https://www.youtube.com/watch?v=LY_pUZbZ5zs-->
-                    <button onclick="gotoLocalDimming(18, 32)">Simulate Apple Pro Display XDR (576 zones)</button>
-                    <!--Guess base on https://www.youtube.com/watch?v=AHJ0yUUuPkE-->
-                    <button onclick="gotoLocalDimming(36, 32)">Simulate INNOCN 27M2V (1152 zones)</button>
-                    <!--https://www.youtube.com/watch?v=P9a5p5GUeAk-->
-                    <button onclick="gotoLocalDimming(24, 48)">Simulate Skyworth F32D80U (1152 zones)</button>
-                    <!--https://www.youtube.com/watch?v=3cIxZQHuCiY-->
-                    <button onclick="gotoLocalDimming(26, 46)">Simulate Samsung Odyssey Neo G7 (1196 zones)</button>
-                    <!---->
-                    <!-- <button onclick="gotoLocalDimming(25, 62)">Simulate LG 27GR95UM (1560 zones)</button> -->
-                    <!---->
-                    <button onclick="gotoLocalDimming(34, 59)">Simulate Apple Macbook Pro 14 (~2000 zones)</button>
-                    <!--https://www.youtube.com/watch?v=cOXfw5vNePE-->
-                    <button onclick="gotoLocalDimming(36, 64)">Simulate Philips 27B1U7903 (2304 zones)</button>
-                    <!---->
-                    <button onclick="gotoLocalDimming(38, 67)">Simulate Apple Macbook Pro 16 (~2500 zones)</button>
-                    <!--https://www.youtube.com/watch?v=6s5E1uujK9Q-->
-                    <button onclick="gotoLocalDimming(48, 106)">Simulate REDMAGIC GM001S (5088 zones)</button>
-                    <!--https://www.youtube.com/watch?v=d8dlz5LWq3E-->
-                    <button onclick="gotoLocalDimming(180, 190)">Simulate TCL X11G Max (20520 zones)</button>
+                    <p>
+                        Apple Pro Display XDR (576 zones)
+                        <button onclick="gotoLocalDimming(18, 32)">Simulate</button>
+                        <a target="_blank" href="https://www.youtube.com/watch?v=LY_pUZbZ5zs">*reference</a>
+                    </p>
+                    <p>
+                        INNOCN 27M2V (1152 zones)
+                        <button onclick="gotoLocalDimming(36, 32)">Simulate</button>
+                        <a target="_blank" href="https://www.youtube.com/watch?v=AHJ0yUUuPkE">(guess base on panel)</a>
+                    </p>
+                    <p>
+                        Skyworth F32D80U (1152 zones)
+                        <button onclick="gotoLocalDimming(24, 48)">Simulate</button>
+                        <a target="_blank" href="https://www.youtube.com/watch?v=P9a5p5GUeAk">*reference</a>
+                    </p>
+                    <p>
+                        Samsung Odyssey Neo G7 (1196 zones)
+                        <button onclick="gotoLocalDimming(26, 46)">Simulate</button>
+                        <a target="_blank" href="https://www.youtube.com/watch?v=3cIxZQHuCiY">*reference</a>
+                    </p>
+                    <p>
+                        LG 27GR95UM (1560 zones)
+                        <button onclick="gotoLocalDimming(30, 52)">Simulate</button>
+                        <a target="_blank" href="https://www.youtube.com/watch?v=TqkW-mf18kk">*reference</a>
+                    </p>
+                    <p>
+                        Apple Macbook Pro 14 (~2000 zones)
+                        <button onclick="gotoLocalDimming(34, 59)">Simulate</button>
+                        (guess)
+                    </p>
+                    <p>
+                        Philips 27B1U7903 (2304 zones)
+                        <button onclick="gotoLocalDimming(36, 64)">Simulate</button>
+                        <a target="_blank" href="https://www.youtube.com/watch?v=cOXfw5vNePE">*reference</a>
+                    </p>
+                    <p>
+                        Apple Macbook Pro 16 (~2500 zones)
+                        <button onclick="gotoLocalDimming(38, 67)">Simulate</button>
+                        (guess)
+                    </p>
+                    <p>
+                        REDMAGIC GM001S (5088 zones)
+                        <button onclick="gotoLocalDimming(48, 106)">Simulate</button>
+                        <a target="_blank" href="https://www.youtube.com/watch?v=6s5E1uujK9Q">*reference</a>
+                    </p>
+                    <p>
+                        TCL X11G Max (20520 zones)
+                        <button onclick="gotoLocalDimming(180, 190)">Simulate</button>
+                        <a target="_blank" href="https://www.youtube.com/watch?v=d8dlz5LWq3E">*reference</a>
+                    </p>
                     <button onclick="gotoNoLocalDimming()">No local dimming</button>
                 </form>
 
