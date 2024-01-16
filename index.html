@@ -147,9 +147,13 @@
                     </p>
                     <p>
                         Hisense U9DG (2073600 zones)
-                        <button onclick="gotoLocalDimming(1080, 1920)">Simulate</button>
+                        <button onclick="gotoOLED(1920, 1080)">Simulate</button>
                         <a target="_blank" href="https://youtu.be/qSGsMN9UGDY?t=127">*by 1080p LCD in front of 132
                             zones</a>
+                    </p>
+                    <p>
+                        OLED/microLED (per pixel)
+                        <button onclick="gotoNativeOLED()">Simulate</button>
                     </p>
                     <button onclick="gotoNoLocalDimming()">No local dimming</button>
                 </form>
@@ -162,6 +166,12 @@
                     }
                     function gotoLocalDimming(row, column) {
                         goto(`/local-dimming?rows=${row}&columns=${column}`);
+                    }
+                    function gotoOLED(width, height) {
+                        goto(`/local-dimming/oled?width=${width}&height=${height}`);
+                    }
+                    function gotoNativeOLED() {
+                        goto(`/local-dimming/oled`);
                     }
                     function gotoNoLocalDimming() {
                         goto(`/local-dimming?rows=1&columns=1`);
