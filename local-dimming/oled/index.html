@@ -1,0 +1,89 @@
+<html>
+
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
+        }
+    </style>
+</head>
+
+<body onresize="InitCanvas()" onmove="InitCanvas()">
+    <canvas id="canvas"></canvas>
+    <script>
+        // Get the query string parameters
+        var urlParams = new URLSearchParams(window.location.search);
+        var width = parseInt(urlParams.get('width')) || window.screen.width;
+        var height = parseInt(urlParams.get('height')) || window.screen.height;
+        var pixelWidth = document.body.clientWidth / width;
+        var pixelHeight = document.body.clientHeight / height;
+
+        // Get the canvas element and its context
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.style.backgroundColor = 'black';
+        canvas.style.cursor = 'none';
+
+        document.getElementsByTagName('canvas')[0].addEventListener('click', () => {
+            try {
+                document.documentElement.requestFullscreen();
+            } catch (err) {
+                document.documentElement.webkitRequestFullScreen();
+            }
+        });
+
+        function InitCanvas() {
+            // Set the canvas size and style
+            canvas.width = document.body.clientWidth;
+            canvas.height = document.body.clientHeight;
+            width = parseInt(urlParams.get('width')) || window.screen.width;
+            height = parseInt(urlParams.get('height')) || window.screen.height;
+            pixelWidth = document.body.clientWidth / width;
+            pixelHeight = document.body.clientHeight / height;
+            console.log(width, height)
+        }
+
+        // Draw a white pixel at the given coordinates
+        function drawPixel(x, y) {
+            ctx.fillStyle = 'white';
+            ctx.fillRect(x, y, pixelWidth, pixelHeight);
+        }
+
+        // Clear the canvas
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Handle the mouse move event
+        function onMouseMove(e) {
+            // Get the mouse position relative to the canvas
+            var rect = canvas.getBoundingClientRect();
+            var x = e.clientX - rect.left;
+            var y = e.clientY - rect.top;
+
+            // Scale the mouse coordinates by the ratio of the canvas size and the viewport size
+            var ratioX = canvas.width / canvas.clientWidth;
+            var ratioY = canvas.height / canvas.clientHeight;
+            x = x * ratioX - pixelWidth / 2;
+            y = y * ratioY - pixelHeight / 2;
+
+            // Clear the canvas and draw a pixel at the mouse position
+            clearCanvas();
+            drawPixel(x, y);
+        }
+
+        InitCanvas();
+        // Add the mouse move event listener to the canvas
+        canvas.addEventListener('mousemove', onMouseMove);
+    </script>
+</body>
+
+</html>
