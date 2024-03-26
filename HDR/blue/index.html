@@ -15,8 +15,17 @@
     <title>HDR blue</title>
 </head>
 
-<body>
+<body style="display: block;min-width: 100%;min-height: 100%;position: absolute;">
     <!-- https://mastodon.social/@tb_99999@threads.net/112151078446565188 -->
+    <script>
+        document.getElementsByTagName('body')[0].addEventListener('click', () => {
+            try {
+                document.documentElement.requestFullscreen();
+            } catch (err) {
+                document.documentElement.webkitRequestFullScreen();
+            }
+        });
+    </script>
 </body>
 
 </html>
