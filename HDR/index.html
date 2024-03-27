@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Apply styles to the container div */
+        .container {
+            display: grid;
+            grid-template-columns: 50% 50%;
+            /* 2 columns */
+            grid-template-rows: 50% 50%;
+            /* 2 rows */
+            height: 100vh;
+            /* Full viewport height */
+        }
+
+        /* Apply styles to each individual div */
+        .box {
+            background-size: cover;
+            /* Ensure images/videos fill the entire div */
+        }
+
+        /* Specify different background images or videos for each div */
+        .box:nth-child(1) {
+            background-image: url('./red/background.jpg');
+            /* Replace with your image or video URL */
+        }
+
+        .box:nth-child(2) {
+            background-image: url('./green/background.jpg');
+            /* Replace with your image or video URL */
+        }
+
+        .box:nth-child(3) {
+            background-image: url('./blue/background.jpg');
+            /* Replace with your image or video URL */
+        }
+
+        .video-container {
+            height: 300px;
+            width: 300px;
+            position: relative;
+        }
+
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            position: absolute;
+            object-fit: cover;
+            z-index: 0;
+        }
+    </style>
+</head>
+
+<body style="margin: 0px; overflow: hidden;">
+    <script>
+        function goto(route) {
+            var pathname = window.location.pathname;
+            var lastSlashIndex = pathname.lastIndexOf("/");
+            var currentUrl = window.location.origin + pathname.substring(0, lastSlashIndex).replace(/\/+$/, "") + window.location.search;
+            var newUrl = currentUrl + route;
+            window.open(newUrl);
+        }
+    </script>
+    <div class="container">
+        <div onclick="goto(`/red`)" class="box"></div>
+        <div onclick="goto(`/green`)" class="box"></div>
+        <div onclick="goto(`/blue`)" class="box"></div>
+        <div onclick="goto(`/white`)" class="box video-container">
+            <video autoplay muted loop>
+                <source src="./white/white.webm" type="video/mp4">
+                <source src="./white/white1.mp4" type="video/mp4" />
+                <source src="./white/white2.mp4" type="video/mp4" />
+            </video>
+        </div>
+    </div>
+</body>
+
+</html>
