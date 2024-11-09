@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Local Dimming Zone Test</title>
+    <style>
+        * {
+            cursor: none !important;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: white;
+            overflow: hidden;
+        }
+
+        .section {
+            position: fixed;
+            background: black;
+            z-index: 1;
+        }
+
+        #crosshair-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        #crosshair-h {
+            position: fixed;
+            width: 100vw;
+            height: 1px;
+            background: white;
+        }
+
+        #crosshair-v {
+            position: fixed;
+            width: 1px;
+            height: 100vh;
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="top-left" class="section"></div>
+    <div id="top-right" class="section"></div>
+    <div id="bottom-left" class="section"></div>
+    <div id="bottom-right" class="section"></div>
+    <div id="crosshair-container">
+        <div id="crosshair-h"></div>
+        <div id="crosshair-v"></div>
+    </div>
+
+    <script>
+        const topLeft = document.getElementById('top-left');
+        const topRight = document.getElementById('top-right');
+        const bottomLeft = document.getElementById('bottom-left');
+        const bottomRight = document.getElementById('bottom-right');
+        const crosshairH = document.getElementById('crosshair-h');
+        const crosshairV = document.getElementById('crosshair-v');
+
+        let lastX = window.innerWidth / 2;
+        let lastY = window.innerHeight / 2;
+
+        function updatePositions(x, y) {
+            lastX = x;
+            lastY = y;
+
+            // Update crosshair position
+            requestAnimationFrame(() => {
+                crosshairH.style.top = `${y}px`;
+                crosshairV.style.left = `${x}px`;
+
+                // Update black sections - keep 1px gap for the white lines
+                topLeft.style.left = '0';
+                topLeft.style.top = '0';
+                topLeft.style.width = `${x}px`;
+                topLeft.style.height = `${y}px`;
+
+                topRight.style.left = `${x + 1}px`;
+                topRight.style.top = '0';
+                topRight.style.width = `${window.innerWidth - x - 1}px`;
+                topRight.style.height = `${y}px`;
+
+                bottomLeft.style.left = '0';
+                bottomLeft.style.top = `${y + 1}px`;
+                bottomLeft.style.width = `${x}px`;
+                bottomLeft.style.height = `${window.innerHeight - y - 1}px`;
+
+                bottomRight.style.left = `${x + 1}px`;
+                bottomRight.style.top = `${y + 1}px`;
+                bottomRight.style.width = `${window.innerWidth - x - 1}px`;
+                bottomRight.style.height = `${window.innerHeight - y - 1}px`;
+            });
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            updatePositions(e.clientX, e.clientY);
+        });
+
+        window.addEventListener('resize', () => {
+            updatePositions(
+                Math.min(window.innerWidth / 2, lastX),
+                Math.min(window.innerHeight / 2, lastY)
+            );
+        });
+
+        // Initial position at center
+        updatePositions(window.innerWidth / 2, window.innerHeight / 2);
+
+        // Ensure crosshair stays visible by continuously updating
+        function renderLoop() {
+            updatePositions(lastX, lastY);
+            requestAnimationFrame(renderLoop);
+        }
+        renderLoop();
+    </script>
+</body>
+
+</html>
