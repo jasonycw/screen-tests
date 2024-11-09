@@ -11,14 +11,13 @@
         body {
             margin: 0;
             padding: 0;
-            background: white;
             overflow: hidden;
         }
 
         .section {
             position: fixed;
             background: black;
-            z-index: 1;
+            z-index: 2;
         }
 
         #crosshair-container {
@@ -28,21 +27,19 @@
             width: 100vw;
             height: 100vh;
             pointer-events: none;
-            z-index: 2;
+            z-index: 3;
         }
 
         #crosshair-h {
             position: fixed;
             width: 100vw;
             height: 1px;
-            background: white;
         }
 
         #crosshair-v {
             position: fixed;
             width: 1px;
             height: 100vh;
-            background: white;
         }
     </style>
 </head>
@@ -56,6 +53,13 @@
         <div id="crosshair-h"></div>
         <div id="crosshair-v"></div>
     </div>
+    <!-- https://github.com/kiding/wanna-see-a-whiter-white/blob/gh-pages/src/index.html -->
+    <video style="overflow: hidden;position: absolute;position: fixed;top: 0;z-index: 1;" min-width="100%"
+        min-height="100%" preload="auto" autoplay loop muted class="w-full h-1" title="HDR White">
+        <source src="../../HDR/white/white.webm" type="video/webm" />
+        <source src="../../HDR/white/white1.mp4" type="video/mp4" />
+        <source src="../../HDR/white/white2.mp4" type="video/mp4" />
+    </video>
 
     <script>
         const topLeft = document.getElementById('top-left');
@@ -120,6 +124,14 @@
             requestAnimationFrame(renderLoop);
         }
         renderLoop();
+
+        document.addEventListener('click', () => {
+            try {
+                document.documentElement.requestFullscreen();
+            } catch (err) {
+                document.documentElement.webkitRequestFullScreen();
+            }
+        });
     </script>
 </body>
 
