@@ -68,19 +68,20 @@
         position: relative;
     }
 
-    .bg-video {
+    .title-video {
         width: 100%;
         height: 6em;
         overflow: hidden;
         object-fit: fill;
     }
 
-    .text {
+    .title-text {
         position: absolute;
         margin: 0;
         inset: 0;
         display: grid;
-        place-items: center;
+        place-items: start;
+        overflow: hidden;
         background-color: black;
         color: white;
         font-size: 90px;
@@ -98,17 +99,17 @@
     }
 </style>
 
-<body style="min-width: 50em;">
+<body style="min-width: 50em;font-family: &quot;Times New Roman&quot;, Georgia, serif;">
     <table>
         <tr style="border: none;">
             <th>
                 <div class="title">
-                    <video class="bg-video" autoplay loop>
+                    <video class="title-video" autoplay loop>
                         <source src="./HDR/white/white.webm" type="video/webm" />
                         <source src="./HDR/white/white1.mp4" type="video/mp4" />
                         <source src="./HDR/white/white2.mp4" type="video/mp4" />
                     </video>
-                    <p class="text">Screen test tools</p>
+                    <p class="title-text">Screen test tools</p>
                 </div>
             </th>
         </tr>
@@ -182,9 +183,24 @@
                     <input type="number" id="column" name="column" value="36"><br>
                     <button onclick="tryLocalDimming()">Simulate local dimming</button>
                     <p>
+                        Sony X90L (80 zones)
+                        <button onclick="gotoLocalDimming(8, 10)">Simulate</button>
+                        <a target="_blank" href="https://www.youtube.com/watch?v=a9afnA9519o">*reference</a>
+                    </p>
+                    <p>
+                        Sony INZONE M9 II (96 zones)
+                        <button onclick="gotoLocalDimming(8, 12)">Simulate</button>
+                        <a target="_blank" href="https://pcmonitors.info/sony/sony-inzone-m9-ii-160hz-4k-uhd-ips-with-hdmi-2-1/#:~:text=Marketing%20materials%20seem%20to%20show%20a%2012%20x%208%20array%20for%2096%20dimming%20zones%2C%20just%20like%20the%20original%20version">*reference</a>
+                    </p>
+                    <p>
                         Xiaomi Smart Display S Mini LED 55 (308 zones)
                         <button onclick="gotoLocalDimming(14, 22)">Simulate</button>
                         <a target="_blank" href="https://poe.com/s/2HrHmFMFWP4INXovZ00O">(guess by Claude)</a>
+                    </p>
+                    <p>
+                        Sony BRAVIA 7 65" (480 zones)
+                        <button onclick="gotoLocalDimming(30, 16)">Simulate</button>
+                        <a target="_blank" href="https://www.rtings.com/discussions/MNOY1NKli6zZOYpo/review-updates-sony-d#comment-141526">*reference</a>
                     </p>
                     <p>
                         Apple Pro Display XDR (576 zones)
@@ -207,6 +223,16 @@
                         <a target="_blank" href="https://www.youtube.com/watch?v=3cIxZQHuCiY">*reference</a>
                     </p>
                     <p>
+                        Sony BRAVIA 9 65" (1512 zones)
+                        <button onclick="gotoLocalDimming(28, 54)">Simulate</button>
+                        <a target="_blank" href="https://www.rtings.com/discussions/m0IRmeAXtPFn-eGA/review-updates-sony-bravia-xr-xr90#comment-140263">*reference</a>
+                    </p>
+                    <p>
+                        TCL 98Q9B (1536 zones)
+                        <button onclick="gotoLocalDimming(32, 48)">Simulate</button>
+                        <a target="_blank" href="https://youtu.be/43SJXaB05Nk?feature=shared&t=37">*reference</a>
+                    </p>
+                    <p>
                         LG 27GR95UM (1560 zones)
                         <button onclick="gotoLocalDimming(30, 52)">Simulate</button>
                         <a target="_blank" href="https://www.youtube.com/watch?v=TqkW-mf18kk">*reference</a>
@@ -217,6 +243,11 @@
                         <a target="_blank" href="https://sl.bing.net/kbdfbfiw9aC">(guess by ChatGPT)</a>
                     </p>
                     <p>
+                        TCL C855 75" (2160 zones)
+                        <button onclick="gotoLocalDimming(36, 60)">Simulate</button>
+                        <a target="_blank" href="https://www.youtube.com/watch?v=SixONfjwb7o">*reference</a>
+                    </p>
+                    <p>
                         Philips 27B1U7903 (2304 zones)
                         <button onclick="gotoLocalDimming(36, 64)">Simulate</button>
                         <a target="_blank" href="https://www.youtube.com/watch?v=cOXfw5vNePE">*reference</a>
@@ -225,6 +256,11 @@
                         Apple Macbook Pro 16 (~2500 zones)
                         <button onclick="gotoLocalDimming(40, 63)">Simulate</button>
                         <a target="_blank" href="https://sl.bing.net/hDOg5y9bfqe">(guess by ChatGPT)</a>
+                    </p>
+                    <p>
+                        Hisense 116UX (3584 zones)
+                        <button onclick="gotoLocalDimming(56, 64)">Simulate</button>
+                        <a target="_blank" href="https://youtu.be/chy-5VW5Uxo?feature=shared&t=195">*reference</a>
                     </p>
                     <p>
                         Hisense UX (5000 zones)
@@ -253,10 +289,20 @@
                         <a target="_blank" href="https://sl.bing.net/gSKA4KHz2bI">(guess by ChatGPT)</a>
                     </p>
                     <p>
+                        DIY "infinity contrast" TV (786432 zones)
+                        <button onclick="gotoLocalDimming(768, 1024)">Simulate</button>
+                        <a target="_blank" href="https://youtu.be/qXrn4MqY1Wo?feature=shared&t=173">*DIY Perks</a>
+                    </p>
+                    <p>
                         Hisense U9DG (2073600 zones)
                         <button onclick="gotoOLED(1920, 1080)">Simulate</button>
                         <a target="_blank" href="https://youtu.be/qSGsMN9UGDY?t=127">*by 1080p LCD in front of 132
                             zones</a>
+                    </p>
+                    <p>
+                        Sony BVM-HX310 (8847360 zones)
+                        <button onclick="gotoOLED(4096, 2160)">Simulate</button>
+                        <a target="_blank" href="https://www.youtube.com/watch?v=7Ee74qdPcmY">*Dual layer 4K LCD</a>
                     </p>
                     <p>
                         OLED/microLED (per pixel)
