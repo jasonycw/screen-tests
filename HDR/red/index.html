@@ -18,6 +18,37 @@
 <body style="display: block;min-width: 100%;min-height: 100%;position: absolute;">
     <!-- https://mastodon.social/@tb_99999@threads.net/112151078446565188 -->
     <script>
+        // Prevent screensaver from activating
+        function preventScreensaver() {
+            if ('wakeLock' in navigator) {
+                navigator.wakeLock.request('screen')
+                    .then(wakeLock => {
+                        console.log('Screen Wake Lock acquired');
+                        document.addEventListener('visibilitychange', async () => {
+                            if (!document.hidden) {
+                                try {
+                                    await navigator.wakeLock.request('screen');
+                                } catch (err) {
+                                    console.log('Wake lock released:', err);
+                                }
+                            }
+                        });
+                    })
+                    .catch(err => {
+                        console.log('Wake Lock request failed:', err);
+                        setInterval(() => {
+                            document.dispatchEvent(new MouseEvent('mousemove'));
+                        }, 30000);
+                    });
+            } else {
+                setInterval(() => {
+                    document.dispatchEvent(new MouseEvent('mousemove'));
+                }, 30000);
+            }
+        }
+        preventScreensaver();
+    </script>
+    <script>
         document.getElementsByTagName('body')[0].addEventListener('click', () => {
             try {
                 document.documentElement.requestFullscreen();

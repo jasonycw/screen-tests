@@ -28,6 +28,37 @@
 <body>
     <div id="toggle"></div>
     <script>
+        // Prevent screensaver from activating
+        function preventScreensaver() {
+            if ('wakeLock' in navigator) {
+                navigator.wakeLock.request('screen')
+                    .then(wakeLock => {
+                        console.log('Screen Wake Lock acquired');
+                        document.addEventListener('visibilitychange', async () => {
+                            if (!document.hidden) {
+                                try {
+                                    await navigator.wakeLock.request('screen');
+                                } catch (err) {
+                                    console.log('Wake lock released:', err);
+                                }
+                            }
+                        });
+                    })
+                    .catch(err => {
+                        console.log('Wake Lock request failed:', err);
+                        setInterval(() => {
+                            document.dispatchEvent(new MouseEvent('mousemove'));
+                        }, 30000);
+                    });
+            } else {
+                setInterval(() => {
+                    document.dispatchEvent(new MouseEvent('mousemove'));
+                }, 30000);
+            }
+        }
+        preventScreensaver();
+    </script>
+    <script>
         // Retrieve the values of the r, g, and b query parameters
         const urlParams = new URLSearchParams(window.location.search);
         const r = urlParams.get('r');

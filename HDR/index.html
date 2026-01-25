@@ -62,6 +62,36 @@
 
 <body style="margin: 0px; overflow: hidden;">
     <script>
+        // Prevent screensaver from activating
+        function preventScreensaver() {
+            if ('wakeLock' in navigator) {
+                navigator.wakeLock.request('screen')
+                    .then(wakeLock => {
+                        console.log('Screen Wake Lock acquired');
+                        document.addEventListener('visibilitychange', async () => {
+                            if (!document.hidden) {
+                                try {
+                                    await navigator.wakeLock.request('screen');
+                                } catch (err) {
+                                    console.log('Wake lock released:', err);
+                                }
+                            }
+                        });
+                    })
+                    .catch(err => {
+                        console.log('Wake Lock request failed:', err);
+                        setInterval(() => {
+                            document.dispatchEvent(new MouseEvent('mousemove'));
+                        }, 30000);
+                    });
+            } else {
+                setInterval(() => {
+                    document.dispatchEvent(new MouseEvent('mousemove'));
+                }, 30000);
+            }
+        }
+        preventScreensaver();
+
         function goto(route) {
             var pathname = window.location.pathname;
             var lastSlashIndex = pathname.lastIndexOf("/");

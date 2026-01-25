@@ -9,6 +9,43 @@
     <meta property="og:description" content="A bunch of tools for testing screen.">
     <meta property="og:site_name" content="Jason Yu">
     <script>
+        // Prevent screensaver from activating
+        function preventScreensaver() {
+            // Try to use Screen Wake Lock API (modern approach)
+            if ('wakeLock' in navigator) {
+                navigator.wakeLock.request('screen')
+                    .then(wakeLock => {
+                        console.log('Screen Wake Lock acquired');
+                        // Handle page visibility change
+                        document.addEventListener('visibilitychange', async () => {
+                            if (!document.hidden) {
+                                try {
+                                    await navigator.wakeLock.request('screen');
+                                } catch (err) {
+                                    console.log('Wake lock released:', err);
+                                }
+                            }
+                        });
+                    })
+                    .catch(err => {
+                        console.log('Wake Lock request failed:', err);
+                        // Fallback: periodic user interaction
+                        setInterval(() => {
+                            document.dispatchEvent(new MouseEvent('mousemove'));
+                        }, 30000); // Every 30 seconds
+                    });
+            } else {
+                // Fallback for browsers without Wake Lock API
+                // Periodically simulate user activity
+                setInterval(() => {
+                    document.dispatchEvent(new MouseEvent('mousemove'));
+                }, 30000); // Every 30 seconds
+            }
+        }
+
+        // Start screensaver prevention
+        preventScreensaver();
+
         function removeQueryStrings() {
             if (window.location.search) {
                 window.history.replaceState(null, null, window.location.pathname);
