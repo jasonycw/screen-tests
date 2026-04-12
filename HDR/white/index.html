@@ -4,11 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+    </style>
     <title>HDR white</title>
 </head>
 
-<body style="margin: 0px; overflow: hidden;">
-    <!-- https://github.com/kiding/wanna-see-a-whiter-white/blob/gh-pages/src/index.html -->
+<body style="display: block;min-width: 100%;min-height: 100%;position: absolute;">
     <script>
         // Prevent screensaver from activating
         function preventScreensaver() {
@@ -40,12 +47,6 @@
         }
         preventScreensaver();
     </script>
-    <video style="overflow: hidden;" min-width="100%" min-height="100%" preload="auto" autoplay loop muted
-        class="w-full h-1" title="HDR White">
-        <source src="./white.webm" type="video/webm" />
-        <source src="./white1.mp4" type="video/mp4" />
-        <source src="./white2.mp4" type="video/mp4" />
-    </video>
     <script>
         document.getElementsByTagName('body')[0].addEventListener('click', () => {
             try {
