@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        // Prevent screensaver from activating
+        function preventScreensaver() {
+            if ('wakeLock' in navigator) {
+                navigator.wakeLock.request('screen')
+                    .then(wakeLock => {
+                        console.log('Screen Wake Lock acquired');
+                        document.addEventListener('visibilitychange', async () => {
+                            if (!document.hidden) {
+                                try {
+                                    await navigator.wakeLock.request('screen');
+                                } catch (err) {
+                                    console.log('Wake lock released:', err);
+                                }
+                            }
+                        });
+                    })
+                    .catch(err => {
+                        console.log('Wake Lock request failed:', err);
+                        setInterval(() => {
+                            document.dispatchEvent(new MouseEvent('mousemove'));
+                        }, 30000);
+                    });
+            } else {
+                setInterval(() => {
+                    document.dispatchEvent(new MouseEvent('mousemove'));
+                }, 30000);
+            }
+        }
+        preventScreensaver();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Text Effect</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            overflow: hidden;
+            /* Prevents overflow from positioning */
+            width: 100%;
+            /* Full width */
+            height: 100vh;
+            /* Full height */
+        }
+
+        .text {
+            font-size: 8vw;
+            /* Responsive font size */
+            font-weight: bold;
+            background: black;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: absolute;
+            /* Absolute positioning */
+            top: 50%;
+            /* Center vertically */
+            left: 50%;
+            /* Center horizontally */
+            transform: translate(-50%, -50%);
+            /* Adjust for centering */
+            z-index: 2;
+            /* Ensure text is above video */
+        }
+
+        .video-mask {
+            position: absolute;
+            top: 0;
+            /* Align to top */
+            left: 0;
+            /* Align to left */
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ensures video covers area */
+            clip-path: url(#text-mask);
+            /* Clips video to text shape */
+        }
+
+        svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <svg>
+            <defs>
+                <clipPath id="text-mask">
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="8vw"
+                        font-weight="bold">Hello World</text>
+                </clipPath>
+            </defs>
+        </svg>
+        <video class="video-mask" autoplay muted loop playsinline>
+            <source src="../HDR/white/white.webm" type="video/webm" />
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</body>
+
+</html>
