@@ -11,42 +11,85 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* Apply styles to the container div */
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
         .container {
-            display: grid;
-            grid-template-columns: 50% 50%;
-            /* 2 columns */
-            grid-template-rows: 50% 50%;
-            /* 2 rows */
+            position: relative;
+            width: 100vw;
             height: 100vh;
-            /* Full viewport height */
+            overflow: hidden;
         }
 
-        /* Apply styles to each individual div */
-        .box {
-            background-size: cover;
-            /* Ensure images/videos fill the entire div */
+        .pie-slice {
+            position: absolute;
+            width: 5000px;
+            height: 5000px;
+            top: 50%;
+            left: 50%;
+            margin-left: -2500px;
+            margin-top: -2500px;
+            cursor: pointer;
         }
 
-        /* Specify different background images or videos for each div */
+        /* Each slice is exactly 51.428571 degrees (360/7) */
+        /* Large triangle from center (2500, 2500) to edge points */
         .box:nth-child(1) {
             background-image: url('./red/background.jpg');
-            /* Replace with your image or video URL */
+            background-size: cover;
+            background-position: center;
+            clip-path: polygon(50% 50%, 50% 0%, 99.24% 15.15%);
+            transform: rotate(0deg);
         }
 
         .box:nth-child(2) {
             background-image: url('./green/background.jpg');
-            /* Replace with your image or video URL */
+            background-size: cover;
+            background-position: center;
+            clip-path: polygon(50% 50%, 50% 0%, 99.24% 15.15%);
+            transform: rotate(51.428571deg);
         }
 
         .box:nth-child(3) {
             background-image: url('./blue/background.jpg');
-            /* Replace with your image or video URL */
+            background-size: cover;
+            background-position: center;
+            clip-path: polygon(50% 50%, 50% 0%, 99.24% 15.15%);
+            transform: rotate(102.857142deg);
         }
 
         .box:nth-child(4) {
             background-image: url('./white/background.jpg');
-            /* Replace with your image or video URL */
+            background-size: cover;
+            background-position: center;
+            clip-path: polygon(50% 50%, 50% 0%, 99.24% 15.15%);
+            transform: rotate(154.285714deg);
+        }
+
+        .box:nth-child(5) {
+            background-image: url('./cyan/background.jpg');
+            background-size: cover;
+            background-position: center;
+            clip-path: polygon(50% 50%, 50% 0%, 99.24% 15.15%);
+            transform: rotate(205.714286deg);
+        }
+
+        .box:nth-child(6) {
+            background-image: url('./magenta/background.jpg');
+            background-size: cover;
+            background-position: center;
+            clip-path: polygon(50% 50%, 50% 0%, 99.24% 15.15%);
+            transform: rotate(257.142857deg);
+        }
+
+        .box:nth-child(7) {
+            background-image: url('./yellow/background.jpg');
+            background-size: cover;
+            background-position: center;
+            clip-path: polygon(50% 50%, 50% 0%, 99.24% 15.15%);
+            transform: rotate(308.571429deg);
         }
     </style>
 </head>
@@ -92,11 +135,54 @@
         }
     </script>
     <div class="container">
-        <div onclick="goto(`/red`)" class="box"></div>
-        <div onclick="goto(`/green`)" class="box"></div>
-        <div onclick="goto(`/blue`)" class="box"></div>
-        <div onclick="goto(`/white`)" class="box"></div>
+        <div onclick="goto(`/red`)" class="box pie-slice"></div>
+        <div onclick="goto(`/green`)" class="box pie-slice"></div>
+        <div onclick="goto(`/blue`)" class="box pie-slice"></div>
+        <div onclick="goto(`/white`)" class="box pie-slice"></div>
+        <div onclick="goto(`/cyan`)" class="box pie-slice"></div>
+        <div onclick="goto(`/magenta`)" class="box pie-slice"></div>
+        <div onclick="goto(`/yellow`)" class="box pie-slice"></div>
     </div>
+
+    <script>
+        // Prevent screensaver from activating
+        function preventScreensaver() {
+            if ('wakeLock' in navigator) {
+                navigator.wakeLock.request('screen')
+                    .then(wakeLock => {
+                        console.log('Screen Wake Lock acquired');
+                        document.addEventListener('visibilitychange', async () => {
+                            if (!document.hidden) {
+                                try {
+                                    await navigator.wakeLock.request('screen');
+                                } catch (err) {
+                                    console.log('Wake lock released:', err);
+                                }
+                            }
+                        });
+                    })
+                    .catch(err => {
+                        console.log('Wake Lock request failed:', err);
+                        setInterval(() => {
+                            document.dispatchEvent(new MouseEvent('mousemove'));
+                        }, 30000);
+                    });
+            } else {
+                setInterval(() => {
+                    document.dispatchEvent(new MouseEvent('mousemove'));
+                }, 30000);
+            }
+        }
+        preventScreensaver();
+
+        function goto(route) {
+            var pathname = window.location.pathname;
+            var lastSlashIndex = pathname.lastIndexOf("/");
+            var currentUrl = window.location.origin + pathname.substring(0, lastSlashIndex).replace(/\/+$/, "") + window.location.search;
+            var newUrl = currentUrl + route;
+            window.open(newUrl);
+        }
+    </script>
 </body>
 
 </html>
