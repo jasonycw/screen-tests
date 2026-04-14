@@ -10,6 +10,10 @@
             padding: 0;
             background: url('background.jpg') no-repeat center center fixed;
             background-size: cover;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         .background-image-container {
@@ -32,6 +36,8 @@
             pointer-events: none;    /* Disables clicks, right-clicks, and dragging entirely */
             user-select: none;       /* Prevents text/element highlighting */
             -webkit-user-drag: none; /* Extra safeguard for Safari/Chrome dragging */
+            -webkit-touch-callout: none; 
+            -webkit-user-select: none;
         }
     </style>
     <title>HDR white</title>
