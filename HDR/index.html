@@ -14,13 +14,36 @@
         body {
             margin: 0;
             overflow: hidden;
+            background-color: #000;
+            /* Dark background just in case */
         }
 
+        /* The container stays fixed to the viewport to hide overflow cleanly */
         .container {
             position: relative;
             width: 100vw;
             height: 100vh;
             overflow: hidden;
+        }
+
+        /* The spinner wrapper that handles the rotation */
+        .spinner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: spin 5s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .pie-slice {
@@ -36,7 +59,9 @@
 
         /* Each slice is exactly 51.428571 degrees (360/7) */
         /* Large triangle from center (2500, 2500) to edge points */
+        /* Added fallback background-color so the shape is visible even if images fail to load */
         .box:nth-child(1) {
+            background-color: red;
             background-image: url('./red/background.jpg');
             background-size: cover;
             background-position: center;
@@ -45,6 +70,7 @@
         }
 
         .box:nth-child(2) {
+            background-color: green;
             background-image: url('./green/background.jpg');
             background-size: cover;
             background-position: center;
@@ -53,6 +79,7 @@
         }
 
         .box:nth-child(3) {
+            background-color: blue;
             background-image: url('./blue/background.jpg');
             background-size: cover;
             background-position: center;
@@ -61,6 +88,7 @@
         }
 
         .box:nth-child(4) {
+            background-color: white;
             background-image: url('./white/background.jpg');
             background-size: cover;
             background-position: center;
@@ -69,6 +97,7 @@
         }
 
         .box:nth-child(5) {
+            background-color: cyan;
             background-image: url('./cyan/background.jpg');
             background-size: cover;
             background-position: center;
@@ -77,6 +106,7 @@
         }
 
         .box:nth-child(6) {
+            background-color: magenta;
             background-image: url('./magenta/background.jpg');
             background-size: cover;
             background-position: center;
@@ -85,6 +115,7 @@
         }
 
         .box:nth-child(7) {
+            background-color: yellow;
             background-image: url('./yellow/background.jpg');
             background-size: cover;
             background-position: center;
@@ -94,54 +125,18 @@
     </style>
 </head>
 
-<body style="margin: 0px; overflow: hidden;">
-    <script>
-        // Prevent screensaver from activating
-        function preventScreensaver() {
-            if ('wakeLock' in navigator) {
-                navigator.wakeLock.request('screen')
-                    .then(wakeLock => {
-                        console.log('Screen Wake Lock acquired');
-                        document.addEventListener('visibilitychange', async () => {
-                            if (!document.hidden) {
-                                try {
-                                    await navigator.wakeLock.request('screen');
-                                } catch (err) {
-                                    console.log('Wake lock released:', err);
-                                }
-                            }
-                        });
-                    })
-                    .catch(err => {
-                        console.log('Wake Lock request failed:', err);
-                        setInterval(() => {
-                            document.dispatchEvent(new MouseEvent('mousemove'));
-                        }, 30000);
-                    });
-            } else {
-                setInterval(() => {
-                    document.dispatchEvent(new MouseEvent('mousemove'));
-                }, 30000);
-            }
-        }
-        preventScreensaver();
-
-        function goto(route) {
-            var pathname = window.location.pathname;
-            var lastSlashIndex = pathname.lastIndexOf("/");
-            var currentUrl = window.location.origin + pathname.substring(0, lastSlashIndex).replace(/\/+$/, "") + window.location.search;
-            var newUrl = currentUrl + route;
-            window.open(newUrl);
-        }
-    </script>
+<body>
     <div class="container">
-        <div onclick="goto(`/red`)" class="box pie-slice"></div>
-        <div onclick="goto(`/green`)" class="box pie-slice"></div>
-        <div onclick="goto(`/blue`)" class="box pie-slice"></div>
-        <div onclick="goto(`/white`)" class="box pie-slice"></div>
-        <div onclick="goto(`/cyan`)" class="box pie-slice"></div>
-        <div onclick="goto(`/magenta`)" class="box pie-slice"></div>
-        <div onclick="goto(`/yellow`)" class="box pie-slice"></div>
+        <!-- The spinner div contains all slices and continuously rotates -->
+        <div class="spinner">
+            <div onclick="goto(`/red`)" class="box pie-slice"></div>
+            <div onclick="goto(`/green`)" class="box pie-slice"></div>
+            <div onclick="goto(`/blue`)" class="box pie-slice"></div>
+            <div onclick="goto(`/white`)" class="box pie-slice"></div>
+            <div onclick="goto(`/cyan`)" class="box pie-slice"></div>
+            <div onclick="goto(`/magenta`)" class="box pie-slice"></div>
+            <div onclick="goto(`/yellow`)" class="box pie-slice"></div>
+        </div>
     </div>
 
     <script>
