@@ -10,6 +10,39 @@
             padding: 0;
             background: url('background.jpg') no-repeat center center fixed;
             background-size: cover;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .background-image-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .background-image-container img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+            /* Ensures the image fills the screen without stretching/squishing */
+            object-position: center;
+            /* Keeps the most important part of the image centered */
+
+            /* Disable user interactions */
+            pointer-events: none;
+            /* Disables clicks, right-clicks, and dragging entirely */
+            user-select: none;
+            /* Prevents text/element highlighting */
+            -webkit-user-drag: none;
+            /* Extra safeguard for Safari/Chrome dragging */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
         }
     </style>
     <title>HDR yellow</title>
@@ -20,6 +53,10 @@
 </head>
 
 <body style="display: block;min-width: 100%;min-height: 100%;position: absolute;">
+    <div class="background-image-container">
+        <img src="background.jpg" alt="Background" draggable="false">
+    </div>
+
     <script>
         // Prevent screensaver from activating
         function preventScreensaver() {
