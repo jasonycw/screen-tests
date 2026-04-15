@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow: hidden;">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HDR QR code</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://jasonycw.github.io/screen-tests/HDR/qr-code.png">
+    <meta property="og:description" content="😎 QR code to 🌈">
+    <meta property="og:site_name" content="Jason Yu">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .qr-spinner-container {
+            position: relative;
+            width: 50vmin;
+            height: 50vmin;
+            background-color: #000;
+            overflow: hidden;
+        }
+
+        .spinner {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            animation: spin 12s linear infinite;
+        }
+
+        .box {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-size: cover;
+            background-position: center;
+            transform-origin: center center;
+            cursor: pointer;
+        }
+
+        /* REFINED MATHEMATICAL BLEND:
+           To have NO gaps, the fade must span the full distance between slice centers.
+           Slice Distance = 51.428571deg.
+           We will make each slice fade from 0 to 1 over one full slice-width, 
+           and 1 back to 0 over the next.
+        */
+
+        /* STANDARD SLICE MASK
+           Starts fading in at -51.428deg (at the previous slice's center)
+           Reaches 100% at 0deg (its own center)
+           Fades out to 0% at 51.428deg (at the next slice's center)
+        */
+        .box.standard-slice {
+            -webkit-mask-image: conic-gradient(from -51.428571deg,
+                    transparent 0deg,
+                    black 51.428571deg,
+                    transparent 102.857142deg,
+                    transparent 360deg);
+            mask-image: conic-gradient(from -51.428571deg,
+                    transparent 0deg,
+                    black 51.428571deg,
+                    transparent 102.857142deg,
+                    transparent 360deg);
+        }
+
+        /* 1st HALF RED SLICE: 
+           Solid at 0deg, fades out completely by 51.428deg (Green's center)
+        */
+        .box.half-slice-start {
+            -webkit-mask-image: conic-gradient(from 0deg,
+                    black 0deg,
+                    transparent 51.428571deg,
+                    transparent 360deg);
+            mask-image: conic-gradient(from 0deg,
+                    black 0deg,
+                    transparent 51.428571deg,
+                    transparent 360deg);
+        }
+
+        /* LAST HALF RED SLICE: 
+           Starts fading in at Yellow's center (-51.428deg relative to 360)
+           Solid at its own core end (0deg relative to rotation)
+        */
+        .box.half-slice-end {
+            -webkit-mask-image: conic-gradient(from -51.428571deg,
+                    transparent 0deg,
+                    black 51.428571deg,
+                    transparent 51.428571deg,
+                    transparent 360deg);
+            mask-image: conic-gradient(from -51.428571deg,
+                    transparent 0deg,
+                    black 51.428571deg,
+                    transparent 51.428571deg,
+                    transparent 360deg);
+        }
+
+        /* Rotations (Standard Spacing) */
+        .box:nth-child(1) {
+            background-color: red;
+            transform: rotate(0deg);
+            z-index: 1;
+        }
+
+        .box:nth-child(2) {
+            background-color: green;
+            transform: rotate(51.428571deg);
+            z-index: 2;
+        }
+
+        .box:nth-child(3) {
+            background-color: blue;
+            transform: rotate(102.857142deg);
+            z-index: 3;
+        }
+
+        .box:nth-child(4) {
+            background-color: black;
+            transform: rotate(154.285714deg);
+            z-index: 4;
+        }
+
+        .box:nth-child(5) {
+            background-color: cyan;
+            transform: rotate(205.714286deg);
+            z-index: 5;
+        }
+
+        .box:nth-child(6) {
+            background-color: magenta;
+            transform: rotate(257.142857deg);
+            z-index: 6;
+        }
+
+        .box:nth-child(7) {
+            background-color: yellow;
+            transform: rotate(308.571429deg);
+            z-index: 7;
+        }
+
+        .box:nth-child(8) {
+            background-color: red;
+            transform: rotate(360deg);
+            z-index: 8;
+        }
+
+        .box {
+            background-image: var(--bg-img);
+        }
+
+        .box:nth-child(1),
+        .box:nth-child(8) {
+            --bg-img: url('../red/background.jpg');
+        }
+
+        .box:nth-child(2) {
+            --bg-img: url('../green/background.jpg');
+        }
+
+        .box:nth-child(3) {
+            --bg-img: url('../blue/background.jpg');
+        }
+
+        .box:nth-child(4) {
+            /* --bg-img: url('../black/background.jpg'); */
+        }
+
+        .box:nth-child(5) {
+            --bg-img: url('../cyan/background.jpg');
+        }
+
+        .box:nth-child(6) {
+            --bg-img: url('../magenta/background.jpg');
+        }
+
+        .box:nth-child(7) {
+            --bg-img: url('../yellow/background.jpg');
+        }
+
+        .mask-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            -webkit-mask-image: url('./qr-code.png');
+            mask-image: url('./qr-code.png');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-mode: luminance;
+            mask-mode: luminance;
+            pointer-events: none;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="qr-spinner-container">
+        <div class="spinner">
+            <div onclick="goto(`../red`)" class="box half-slice-start"></div>
+            <div onclick="goto(`../green`)" class="box standard-slice"></div>
+            <div onclick="goto(`../blue`)" class="box standard-slice"></div>
+            <div onclick="goto(`../black`)" class="box standard-slice"></div>
+            <div onclick="goto(`../cyan`)" class="box standard-slice"></div>
+            <div onclick="goto(`../magenta`)" class="box standard-slice"></div>
+            <div onclick="goto(`../yellow`)" class="box standard-slice"></div>
+            <div onclick="goto(`../red`)" class="box half-slice-end"></div>
+        </div>
+        <div class="mask-overlay"></div>
+    </div>
+
+    <script>
+        function goto(route) {
+            var pathname = window.location.pathname;
+            var lastSlashIndex = pathname.lastIndexOf("/");
+            var currentUrl = window.location.origin + pathname.substring(0, lastSlashIndex).replace(/\/+$/, "") + window.location.search;
+            var newUrl = currentUrl + route;
+            window.open(newUrl);
+        }
+
+        async function initWakeLock() {
+            try {
+                if ('wakeLock' in navigator) {
+                    await navigator.wakeLock.request('screen');
+                }
+            } catch (err) {
+                setInterval(() => {
+                    document.dispatchEvent(new MouseEvent('mousemove'));
+                }, 30000);
+            }
+        }
+        window.onload = initWakeLock;
+    </script>
+</body>
+
+</html>
