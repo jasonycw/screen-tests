@@ -220,14 +220,14 @@
 <body>
     <div class="qr-spinner-container">
         <div class="spinner">
-            <div onclick="goto(`../red`)" class="box half-slice-start"></div>
-            <div onclick="goto(`../green`)" class="box standard-slice"></div>
-            <div onclick="goto(`../blue`)" class="box standard-slice"></div>
-            <div onclick="goto(`../black`)" class="box standard-slice"></div>
-            <div onclick="goto(`../cyan`)" class="box standard-slice"></div>
-            <div onclick="goto(`../magenta`)" class="box standard-slice"></div>
-            <div onclick="goto(`../yellow`)" class="box standard-slice"></div>
-            <div onclick="goto(`../red`)" class="box half-slice-end"></div>
+            <div onclick="goto(`/red`)" class="box half-slice-start"></div>
+            <div onclick="goto(`/green`)" class="box standard-slice"></div>
+            <div onclick="goto(`/blue`)" class="box standard-slice"></div>
+            <div onclick="goto(`/black`)" class="box standard-slice"></div>
+            <div onclick="goto(`/cyan`)" class="box standard-slice"></div>
+            <div onclick="goto(`/magenta`)" class="box standard-slice"></div>
+            <div onclick="goto(`/yellow`)" class="box standard-slice"></div>
+            <div onclick="goto(`/red`)" class="box half-slice-end"></div>
         </div>
         <div class="mask-overlay"></div>
     </div>
@@ -236,6 +236,7 @@
         function goto(route) {
             var pathname = window.location.pathname;
             var lastSlashIndex = pathname.lastIndexOf("/");
+            lastSlashIndex = pathname.substring(0, lastSlashIndex).lastIndexOf("/");
             var currentUrl = window.location.origin + pathname.substring(0, lastSlashIndex).replace(/\/+$/, "") + window.location.search;
             var newUrl = currentUrl + route;
             window.open(newUrl);
