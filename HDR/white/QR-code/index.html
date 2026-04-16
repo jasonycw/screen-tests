@@ -118,7 +118,7 @@
             qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=${encodeURIComponent(qrContent)}`;
         } else {
             // Use local file by default, fallback to API if local file is missing
-            qrImg.src = 'qr-code.png';
+            qrImg.src = '../../QR-code/qr-code.png';
             qrImg.onerror = function () {
                 this.onerror = null; // Prevent infinite loop if API also fails
                 this.src = 'https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=https://jasonycw.github.io/screen-tests/HDR/';
