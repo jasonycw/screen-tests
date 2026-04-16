@@ -233,6 +233,30 @@
     </div>
 
     <script>
+        // Update QR code based on 'content' query string
+        const urlParams = new URLSearchParams(window.location.search);
+        let customContent = urlParams.get('content');
+
+        if (customContent) {
+            try {
+                // HTTP/URL decode the content. URLSearchParams automatically decodes once,
+                // but this ensures it is fully decoded even if it was double-encoded.
+                while (customContent !== decodeURIComponent(customContent)) {
+                    customContent = decodeURIComponent(customContent);
+                }
+            } catch (e) {
+                // Ignore malformed URI errors and use the string as-is
+            }
+
+            // Using the permitted fallback API dynamically.
+            const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=' + encodeURIComponent(customContent);
+            const maskOverlay = document.querySelector('.mask-overlay');
+
+            // Override the default CSS masks
+            maskOverlay.style.webkitMaskImage = `url('${qrUrl}')`;
+            maskOverlay.style.maskImage = `url('${qrUrl}')`;
+        }
+
         function goto(route) {
             var pathname = window.location.pathname;
             var lastSlashIndex = pathname.lastIndexOf("/");
