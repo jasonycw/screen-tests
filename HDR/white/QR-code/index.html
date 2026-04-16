@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow: hidden;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('../background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .background-image-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .background-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ensures the image fills the screen without stretching/squishing */
+            object-position: center;
+            /* Keeps the most important part of the image centered */
+
+            /* Disable user interactions */
+            pointer-events: none;
+            /* Disables clicks, right-clicks, and dragging entirely */
+            user-select: none;
+            /* Prevents text/element highlighting */
+            -webkit-user-drag: none;
+            /* Extra safeguard for Safari/Chrome dragging */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+        }
+
+        /* --- NEW CSS FOR QR CODE MASK --- */
+        .qr-mask-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Centers the element perfectly */
+
+            /* 50vmin takes 50% of the viewport's smaller dimension (width or height), ensuring it stays a perfect square and doesn't get cut off */
+            width: 50vmin;
+            height: 50vmin;
+            z-index: 2;
+            /* Places it directly over the background */
+
+            /* MAGIC PROPERTY: Makes white pixels transparent and keeps black pixels black */
+            mix-blend-mode: multiply;
+
+            /* Ensures clicking the QR code passes through to the body (for your fullscreen script) */
+            pointer-events: none;
+        }
+
+        .qr-mask-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+
+            /* Disable user interactions */
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -webkit-touch-callout: none;
+        }
+    </style>
+    <title>HDR QR Code</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://jasonycw.github.io/screen-tests/HDR/white/QR-code/qr-code.png">
+    <meta property="og:description" content="▫️◽◻️⬜ QR code ⬜◻️◽▫️">
+    <meta property="og:site_name" content="Jason Yu">
+</head>
+
+<body style="display: block;min-width: 100%;min-height: 100%;position: absolute;">
+    <div class="background-image-container">
+        <!-- Added a fallback external image link in onerror just in case background.jpg isn't present, so you can preview it immediately -->
+        <img src="../background.jpg"
+            onerror="this.src='https://jasonycw.github.io/screen-tests/HDR/white/background.jpg'" alt="Background"
+            draggable="false">
+    </div>
+
+    <!-- NEW QR CODE CONTAINER -->
+    <div class="qr-mask-container">
+        <img id="qr-mask-img" alt="QR Mask" draggable="false">
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        let qrContent = urlParams.get('content');
+        const qrImg = document.getElementById('qr-mask-img');
+
+        if (qrContent) {
+            try {
+                // Fully decode the content in case it was double-encoded.
+                // (URLSearchParams decodes it once automatically).
+                while (qrContent !== decodeURIComponent(qrContent)) {
+                    qrContent = decodeURIComponent(qrContent);
+                }
+            } catch (e) {
+                // Ignore any URIError if malformed
+            }
+
+            // Generating QR code purely from scratch in vanilla JS requires an enormous amount of math 
+            // and error correction logic. Using your provided fallback API instead.
+            qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=${encodeURIComponent(qrContent)}`;
+        } else {
+            // Use local file by default, fallback to API if local file is missing
+            qrImg.src = 'qr-code.png';
+            qrImg.onerror = function () {
+                this.onerror = null; // Prevent infinite loop if API also fails
+                this.src = 'https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=https://jasonycw.github.io/screen-tests/HDR/';
+            };
+        }
+    </script>
+
+    <script>
+        // Prevent screensaver from activating
+        function preventScreensaver() {
+            if ('wakeLock' in navigator) {
+                navigator.wakeLock.request('screen')
+                    .then(wakeLock => {
+                        console.log('Screen Wake Lock acquired');
+                        document.addEventListener('visibilitychange', async () => {
+                            if (!document.hidden) {
+                                try {
+                                    await navigator.wakeLock.request('screen');
+                                } catch (err) {
+                                    console.log('Wake lock released:', err);
+                                }
+                            }
+                        });
+                    })
+                    .catch(err => {
+                        console.log('Wake Lock request failed:', err);
+                        setInterval(() => {
+                            document.dispatchEvent(new MouseEvent('mousemove'));
+                        }, 30000);
+                    });
+            } else {
+                setInterval(() => {
+                    document.dispatchEvent(new MouseEvent('mousemove'));
+                }, 30000);
+            }
+        }
+        preventScreensaver();
+    </script>
+    <script>
+        document.getElementsByTagName('body')[0].addEventListener('click', () => {
+            try {
+                document.documentElement.requestFullscreen();
+            } catch (err) {
+                document.documentElement.webkitRequestFullScreen();
+            }
+        });
+    </script>
+</body>
+
+</html>
