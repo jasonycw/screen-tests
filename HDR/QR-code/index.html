@@ -36,6 +36,8 @@
             width: 200%;
             height: 200%;
             animation: spin 12s linear infinite;
+            pointer-events: none;
+            /* Let clicks pass through to the container math */
         }
 
         .box {
@@ -47,112 +49,81 @@
             background-size: cover;
             background-position: center;
             transform-origin: center center;
-            cursor: pointer;
         }
 
-        /* REFINED MATHEMATICAL BLEND:
-           To have NO gaps, the fade must span the full distance between slice centers.
-           Slice Distance = 51.428571deg.
-           We will make each slice fade from 0 to 1 over one full slice-width, 
-           and 1 back to 0 over the next.
-        */
-
-        /* STANDARD SLICE MASK
-           Starts fading in at -51.428deg (at the previous slice's center)
-           Reaches 100% at 0deg (its own center)
-           Fades out to 0% at 51.428deg (at the next slice's center)
+        /* MATHEMATICAL BLEND: 51.428deg spacing. 
+           Fades span the full distance between slice centers for a seamless cross-fade.
         */
         .box.standard-slice {
-            -webkit-mask-image: conic-gradient(from -51.428571deg,
-                    transparent 0deg,
-                    black 51.428571deg,
-                    transparent 102.857142deg,
-                    transparent 360deg);
-            mask-image: conic-gradient(from -51.428571deg,
-                    transparent 0deg,
-                    black 51.428571deg,
-                    transparent 102.857142deg,
-                    transparent 360deg);
+            -webkit-mask-image: conic-gradient(from -51.428571deg, transparent 0deg, black 51.428571deg, transparent 102.857142deg, transparent 360deg);
+            mask-image: conic-gradient(from -51.428571deg, transparent 0deg, black 51.428571deg, transparent 102.857142deg, transparent 360deg);
         }
 
-        /* 1st HALF RED SLICE: 
-           Solid at 0deg, fades out completely by 51.428deg (Green's center)
-        */
         .box.half-slice-start {
-            -webkit-mask-image: conic-gradient(from 0deg,
-                    black 0deg,
-                    transparent 51.428571deg,
-                    transparent 360deg);
-            mask-image: conic-gradient(from 0deg,
-                    black 0deg,
-                    transparent 51.428571deg,
-                    transparent 360deg);
+            -webkit-mask-image: conic-gradient(from 0deg, black 0deg, transparent 51.428571deg, transparent 360deg);
+            mask-image: conic-gradient(from 0deg, black 0deg, transparent 51.428571deg, transparent 360deg);
         }
 
-        /* LAST HALF RED SLICE: 
-           Starts fading in at Yellow's center (-51.428deg relative to 360)
-           Solid at its own core end (0deg relative to rotation)
-        */
         .box.half-slice-end {
-            -webkit-mask-image: conic-gradient(from -51.428571deg,
-                    transparent 0deg,
-                    black 51.428571deg,
-                    transparent 51.428571deg,
-                    transparent 360deg);
-            mask-image: conic-gradient(from -51.428571deg,
-                    transparent 0deg,
-                    black 51.428571deg,
-                    transparent 51.428571deg,
-                    transparent 360deg);
+            -webkit-mask-image: conic-gradient(from -51.428571deg, transparent 0deg, black 51.428571deg, transparent 51.428571deg, transparent 360deg);
+            mask-image: conic-gradient(from -51.428571deg, transparent 0deg, black 51.428571deg, transparent 51.428571deg, transparent 360deg);
         }
 
-        /* Rotations (Standard Spacing) */
+        /* Rotations */
         .box:nth-child(1) {
             background-color: red;
             transform: rotate(0deg);
             z-index: 1;
+            --color-id: 'red';
         }
 
         .box:nth-child(2) {
             background-color: green;
             transform: rotate(51.428571deg);
             z-index: 2;
+            --color-id: 'green';
         }
 
         .box:nth-child(3) {
             background-color: blue;
             transform: rotate(102.857142deg);
             z-index: 3;
+            --color-id: 'blue';
         }
 
         .box:nth-child(4) {
             background-color: black;
             transform: rotate(154.285714deg);
             z-index: 4;
+            --color-id: 'black';
         }
 
         .box:nth-child(5) {
             background-color: cyan;
             transform: rotate(205.714286deg);
             z-index: 5;
+            --color-id: 'cyan';
         }
 
         .box:nth-child(6) {
             background-color: magenta;
             transform: rotate(257.142857deg);
             z-index: 6;
+            --color-id: 'magenta';
         }
 
         .box:nth-child(7) {
             background-color: yellow;
             transform: rotate(308.571429deg);
             z-index: 7;
+            --color-id: 'yellow';
         }
 
         .box:nth-child(8) {
             background-color: red;
             transform: rotate(360deg);
             z-index: 8;
+            --color-id: 'red';
         }
 
         .box {
@@ -200,6 +171,7 @@
             -webkit-mask-size: contain;
             mask-size: contain;
             -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
             -webkit-mask-mode: luminance;
             mask-mode: luminance;
             pointer-events: none;
@@ -218,63 +190,81 @@
 </head>
 
 <body>
-    <div class="qr-spinner-container">
-        <div class="spinner">
-            <div onclick="goto(`/red`)" class="box half-slice-start"></div>
-            <div onclick="goto(`/green`)" class="box standard-slice"></div>
-            <div onclick="goto(`/blue`)" class="box standard-slice"></div>
-            <div onclick="goto(`/black`)" class="box standard-slice"></div>
-            <div onclick="goto(`/cyan`)" class="box standard-slice"></div>
-            <div onclick="goto(`/magenta`)" class="box standard-slice"></div>
-            <div onclick="goto(`/yellow`)" class="box standard-slice"></div>
-            <div onclick="goto(`/red`)" class="box half-slice-end"></div>
+    <div class="qr-spinner-container" id="mainContainer">
+        <div class="spinner" id="spinnerEl">
+            <div class="box half-slice-start"></div>
+            <div class="box standard-slice"></div>
+            <div class="box standard-slice"></div>
+            <div class="box standard-slice"></div>
+            <div class="box standard-slice"></div>
+            <div class="box standard-slice"></div>
+            <div class="box standard-slice"></div>
+            <div class="box half-slice-end"></div>
         </div>
-        <div class="mask-overlay"></div>
+        <div class="mask-overlay" id="qrMask"></div>
     </div>
 
     <script>
-        // Update QR code based on 'content' query string
+        /** 1. QR Content Logic **/
         const urlParams = new URLSearchParams(window.location.search);
         let customContent = urlParams.get('content');
 
         if (customContent) {
             try {
-                // HTTP/URL decode the content. URLSearchParams automatically decodes once,
-                // but this ensures it is fully decoded even if it was double-encoded.
                 while (customContent !== decodeURIComponent(customContent)) {
                     customContent = decodeURIComponent(customContent);
                 }
-            } catch (e) {
-                // Ignore malformed URI errors and use the string as-is
-            }
+            } catch (e) { }
 
-            // Using the permitted fallback API dynamically.
-            const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=' + encodeURIComponent(customContent);
-            const maskOverlay = document.querySelector('.mask-overlay');
-
-            // Override the default CSS masks
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=${encodeURIComponent(customContent)}`;
+            const maskOverlay = document.getElementById('qrMask');
             maskOverlay.style.webkitMaskImage = `url('${qrUrl}')`;
             maskOverlay.style.maskImage = `url('${qrUrl}')`;
         }
 
+        /** 2. Coordinate-based Click Logic **/
+        const container = document.getElementById('mainContainer');
+        const spinner = document.getElementById('spinnerEl');
+        const colors = ['red', 'green', 'blue', 'white', 'cyan', 'magenta', 'yellow'];
+        const sliceWidth = 360 / 7;
+
+        container.addEventListener('click', (e) => {
+            const rect = container.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            // Get angle of click relative to center (0deg is Top/12 o'clock)
+            const rad = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+            let angle = rad * (180 / Math.PI) + 90;
+            angle = (angle + 360) % 360;
+
+            // Get current rotation of the spinner
+            const style = window.getComputedStyle(spinner);
+            const matrix = new WebKitCSSMatrix(style.transform);
+            const currentRotation = (Math.round(Math.atan2(matrix.b, matrix.a) * (180 / Math.PI)) + 360) % 360;
+
+            // Normalize click angle relative to the internal 0-point of the slices
+            const relativeAngle = (angle - currentRotation + 360) % 360;
+
+            // Calculate which index was hit. We shift by half a slice width to center the mapping.
+            const index = Math.floor((relativeAngle + (sliceWidth / 2)) / sliceWidth) % 7;
+            goto(`/${colors[index]}`);
+        });
+
         function goto(route) {
-            var pathname = window.location.pathname;
-            var lastSlashIndex = pathname.lastIndexOf("/");
+            const pathname = window.location.pathname;
+            let lastSlashIndex = pathname.lastIndexOf("/");
             lastSlashIndex = pathname.substring(0, lastSlashIndex).lastIndexOf("/");
-            var currentUrl = window.location.origin + pathname.substring(0, lastSlashIndex).replace(/\/+$/, "") + window.location.search;
-            var newUrl = currentUrl + route;
-            window.open(newUrl);
+            const currentUrl = window.location.origin + pathname.substring(0, lastSlashIndex).replace(/\/+$/, "") + window.location.search;
+            window.open(currentUrl + route);
         }
 
+        /** 3. Utility **/
         async function initWakeLock() {
             try {
-                if ('wakeLock' in navigator) {
-                    await navigator.wakeLock.request('screen');
-                }
+                if ('wakeLock' in navigator) await navigator.wakeLock.request('screen');
             } catch (err) {
-                setInterval(() => {
-                    document.dispatchEvent(new MouseEvent('mousemove'));
-                }, 30000);
+                setInterval(() => document.dispatchEvent(new MouseEvent('mousemove')), 30000);
             }
         }
         window.onload = initWakeLock;
