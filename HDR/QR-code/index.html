@@ -243,22 +243,25 @@
             // Get current rotation of the spinner
             const style = window.getComputedStyle(spinner);
             const matrix = new WebKitCSSMatrix(style.transform);
-            const currentRotation = (Math.round(Math.atan2(matrix.b, matrix.a) * (180 / Math.PI)) + 360) % 360;
+            const currentRotation = (Math.round(Math.atan2(matrix.m12, matrix.m11) * (180 / Math.PI)) + 360) % 360;
 
             // Normalize click angle relative to the internal 0-point of the slices
             const relativeAngle = (angle - currentRotation + 360) % 360;
 
             // Calculate which index was hit. We shift by half a slice width to center the mapping.
             const index = Math.floor((relativeAngle + (sliceWidth / 2)) / sliceWidth) % 7;
-            goto(`/${colors[index]}`);
+            goto(`${colors[index]}`);
         });
 
         function goto(route) {
             const pathname = window.location.pathname;
-            let lastSlashIndex = pathname.lastIndexOf("/");
-            lastSlashIndex = pathname.substring(0, lastSlashIndex).lastIndexOf("/");
-            const currentUrl = window.location.origin + pathname.substring(0, lastSlashIndex).replace(/\/+$/, "") + window.location.search;
-            window.open(currentUrl + route);
+            // Get the directory path (up to the last slash)
+            const lastSlashIndex = pathname.lastIndexOf("/");
+            const basePath = pathname.substring(0, lastSlashIndex);
+
+            // Construct clean URL without current query strings
+            const newUrl = window.location.origin + basePath + "/" + route;
+            window.open(newUrl);
         }
 
         /** 3. Utility **/
