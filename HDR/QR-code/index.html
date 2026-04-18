@@ -250,17 +250,29 @@
 
             // Calculate which index was hit. We shift by half a slice width to center the mapping.
             const index = Math.floor((relativeAngle + (sliceWidth / 2)) / sliceWidth) % 7;
-            goto(`${colors[index]}`);
+            goto(colors[index]);
         });
 
         function goto(route) {
             const pathname = window.location.pathname;
-            // Get the directory path (up to the last slash)
-            const lastSlashIndex = pathname.lastIndexOf("/");
-            const basePath = pathname.substring(0, lastSlashIndex);
 
-            // Construct clean URL without current query strings
-            const newUrl = window.location.origin + basePath + "/" + route;
+            // Correctly strip the filename AND the current directory if we are inside "QR-code"
+            // We want to navigate to the sibling directory of "QR-code"
+            // Current URL: .../HDR/QR-code/index.html OR .../HDR/QR-code/
+            // Goal: .../HDR/red
+
+            const parts = pathname.split('/').filter(p => p !== "");
+            // If the last part is "index.html", remove it.
+            if (parts.length > 0 && parts[parts.length - 1].includes('.')) {
+                parts.pop();
+            }
+            // Now the last part is "QR-code". Remove it to get to the "HDR" level.
+            if (parts.length > 0 && parts[parts.length - 1] === "QR-code") {
+                parts.pop();
+            }
+
+            const basePath = parts.join('/');
+            const newUrl = window.location.origin + '/' + basePath + "/" + route;
             window.open(newUrl);
         }
 
